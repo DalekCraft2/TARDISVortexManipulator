@@ -25,7 +25,7 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,9 +56,12 @@ public class TvmRecipe {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(ChatColor.RESET + "Vortex Manipulator");
         if (!plugin.getConfig().getString("recipe.lore").equals("")) {
-            itemMeta.setLore(Arrays.asList(plugin.getConfig().getString("recipe.lore").split("~")));
+            List<String> lore = plugin.getConfig().getStringList("recipe.lore");
+            lore.replaceAll(string -> ChatColor.translateAlternateColorCodes('&', string));
+            itemMeta.setLore(lore);
         }
         itemMeta.setCustomModelData(10000002);
+        // TODO Convert legacy Vortex Manipulators (I.E. items with the base item and lore from the config, and the name "Vortex Manipulator") to have PBVs
         itemMeta.getPersistentDataContainer().set(TardisVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING, "vortex_manipulator");
         itemStack.setItemMeta(itemMeta);
         NamespacedKey key = new NamespacedKey(plugin, "Vortex_Manipulator");

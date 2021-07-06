@@ -16,7 +16,8 @@ recipe:
     I: IRON_INGOT
   result: CLOCK
   amount: 1
-  lore: "Cheap and nasty time travel"
+  lore:
+    - "&7Cheap and nasty time travel"
 tachyon_use:
   max: 1000
   recharge: 25
