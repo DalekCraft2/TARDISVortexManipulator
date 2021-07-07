@@ -42,7 +42,7 @@ public class TvmCommandSave implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vms")) {
+        if (command.getName().equalsIgnoreCase("vmsave")) {
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;

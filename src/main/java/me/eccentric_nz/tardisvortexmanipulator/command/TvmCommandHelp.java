@@ -33,7 +33,7 @@ public class TvmCommandHelp implements CommandExecutor {
 
     @Override
     public boolean onCommand(final @NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmh")) {
+        if (command.getName().equalsIgnoreCase("vmhelp")) {
             if (!sender.hasPermission("vm.teleport")) {
                 sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
                 return true;

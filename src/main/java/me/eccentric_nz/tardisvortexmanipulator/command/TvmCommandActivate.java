@@ -37,7 +37,7 @@ public class TvmCommandActivate implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vma")) {
+        if (command.getName().equalsIgnoreCase("vmactivate")) {
             if (!sender.hasPermission("tardis.admin")) {
                 sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
                 return true;

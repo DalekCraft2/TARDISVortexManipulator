@@ -43,7 +43,7 @@ public class TvmCommandLifesigns implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vml")) {
+        if (command.getName().equalsIgnoreCase("vmlifesigns")) {
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;

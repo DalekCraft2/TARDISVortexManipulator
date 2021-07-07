@@ -46,7 +46,7 @@ public class TvmCommandBeacon implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmb")) {
+        if (command.getName().equalsIgnoreCase("vmbeacon")) {
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;

@@ -49,9 +49,9 @@ public class TvmCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vm")) {
+        if (command.getName().equalsIgnoreCase("vortexmanipulator")) {
             if (args.length > 0 && args[0].equalsIgnoreCase("help")) {
-                plugin.getServer().dispatchCommand(sender, "vmh");
+                plugin.getServer().dispatchCommand(sender, "vmhelp");
                 return true;
             }
             Player player = null;

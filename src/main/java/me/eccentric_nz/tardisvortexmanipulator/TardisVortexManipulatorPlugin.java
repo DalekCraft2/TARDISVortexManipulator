@@ -135,18 +135,18 @@ public class TardisVortexManipulatorPlugin extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("vm").setExecutor(new TvmCommand(this));
-        getCommand("vma").setExecutor(new TvmCommandActivate(this));
-        getCommand("vmb").setExecutor(new TvmCommandBeacon(this));
-        getCommand("vmh").setExecutor(new TvmCommandHelp(this));
-        getCommand("vmh").setTabCompleter(new TvmTabCompleteHelp());
-        getCommand("vml").setExecutor(new TvmCommandLifesigns(this));
-        getCommand("vmm").setExecutor(new TvmCommandMessage(this));
-        getCommand("vmm").setTabCompleter(new TvmTabCompleteMessage());
-        getCommand("vmr").setExecutor(new TvmCommandRemove(this));
-        getCommand("vms").setExecutor(new TvmCommandSave(this));
-        getCommand("vmg").setExecutor(new TvmCommandGive(this));
-        getCommand("vmd").setExecutor(new TvmCommandConvert(this));
+        getCommand("vortexmanipulator").setExecutor(new TvmCommand(this));
+        getCommand("vmactivate").setExecutor(new TvmCommandActivate(this));
+        getCommand("vmbeacon").setExecutor(new TvmCommandBeacon(this));
+        getCommand("vmhelp").setExecutor(new TvmCommandHelp(this));
+        getCommand("vmhelp").setTabCompleter(new TvmTabCompleteHelp());
+        getCommand("vmlifesigns").setExecutor(new TvmCommandLifesigns(this));
+        getCommand("vmmessage").setExecutor(new TvmCommandMessage(this));
+        getCommand("vmmessage").setTabCompleter(new TvmTabCompleteMessage());
+        getCommand("vmremove").setExecutor(new TvmCommandRemove(this));
+        getCommand("vmsave").setExecutor(new TvmCommandSave(this));
+        getCommand("vmgive").setExecutor(new TvmCommandGive(this));
+        getCommand("vmdatabase").setExecutor(new TvmCommandConvert(this));
     }
 
     private void startRecharger() {

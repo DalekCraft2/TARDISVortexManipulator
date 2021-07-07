@@ -40,7 +40,7 @@ public class TvmCommandMessage implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmm")) {
+        if (command.getName().equalsIgnoreCase("vmmessage")) {
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
