@@ -126,7 +126,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
-                        <manifest> 
+                        <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             <mainClass>me.eccentric_nz.tardisvortexmanipulator.database.Main</mainClass>
