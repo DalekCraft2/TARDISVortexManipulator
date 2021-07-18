@@ -17,11 +17,9 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardisvortexmanipulator.TardisVortexManipulatorPlugin;
 import me.eccentric_nz.tardisvortexmanipulator.database.TvmQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TvmResultSetManipulator;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,7 +41,7 @@ public class TvmCommandGive implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmgive") || command.getName().equalsIgnoreCase("vmg")) {
+        if (command.getName().equalsIgnoreCase("vmgive")) {
             if (!sender.hasPermission("tardis.admin")) {
                 sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
                 return true;

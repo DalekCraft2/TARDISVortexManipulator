@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisvortexmanipulator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TardisAPI;
+import me.eccentric_nz.TARDIS.utility.Version;
 import me.eccentric_nz.tardisvortexmanipulator.command.*;
 import me.eccentric_nz.tardisvortexmanipulator.database.TvmDatabase;
 import me.eccentric_nz.tardisvortexmanipulator.database.TvmMySql;
@@ -29,6 +30,7 @@ import me.eccentric_nz.tardisvortexmanipulator.listeners.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
@@ -55,7 +57,7 @@ public class TardisVortexManipulatorPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // TODO Place any custom disable code here.
+        // Place any custom disable code here.
     }
 
     @Override
@@ -64,6 +66,8 @@ public class TardisVortexManipulatorPlugin extends JavaPlugin {
         itemKey = new NamespacedKey(this, "item");
         PluginDescriptionFile pluginDescriptionFile = getDescription();
         pluginName = ChatColor.GOLD + "[" + pluginDescriptionFile.getName() + "]" + ChatColor.RESET + " ";
+        PluginDescriptionFile pdfFile = getDescription();
+        pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
         saveDefaultConfig();
         new TvmConfig(this).checkConfig();
         pluginManager = getServer().getPluginManager();
@@ -77,12 +81,23 @@ public class TardisVortexManipulatorPlugin extends JavaPlugin {
             return;
         }
         this.tardis = (TARDIS) tardis;
+        Version minVersion = new Version("4.7.5");
+        // TARDIS version = something like 4.7.5-b2339 or 4.7.5-b11.07.21-5:24
+        String version = this.tardis.getDescription().getVersion().split("-")[0];
+        Version tardisVersion = new Version(version);
+        if (tardisVersion.compareTo(minVersion) < 0) {
+            System.err.println("[TARDISVortexManipulator] You need a newer version of TARDIS (v4.7.5)!");
+            pluginManager.disablePlugin(this);
+            return;
+        }
         tardisApi = this.tardis.getTardisAPI();
         prefix = getConfig().getString("storage.mysql.prefix");
         loadDatabase();
         registerListeners();
         registerCommands();
-        getServer().addRecipe(new TvmRecipe(this).makeRecipe());
+        ShapedRecipe recipe = new TvmRecipe(this).makeRecipe();
+        getServer().addRecipe(recipe);
+        tardisApi.addShapedRecipe("vortex-manipulator", recipe);
         startRecharger();
     }
 
@@ -109,7 +124,7 @@ public class TardisVortexManipulatorPlugin extends JavaPlugin {
         String databaseType = getConfig().getString("storage.database");
         try {
             if (databaseType.equals("sqlite")) {
-                String path = getDataFolder() + File.separator + "TVM.db";
+                String path = getDataFolder() + File.separator + "Tvm.db";
                 service.setConnection(path);
                 TvmSqlite sqlite = new TvmSqlite(this);
                 sqlite.createTables();
