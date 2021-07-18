@@ -1,11 +1,11 @@
-authors: [ eccentric_nz ]
+authors: [eccentric_nz]
 main: me.eccentric_nz.tardisvortexmanipulator.TardisVortexManipulatorPlugin
 name: TARDISVortexManipulator
 description: Vortex manipulator. Cheap and nasty time travel. Very bad for you. I'm trying to give it up.
 version: ${project.version}
 api-version: 1.17
 load: POSTWORLD
-depend: [ TARDIS ]
+depend: [TARDIS]
 website: http://tardisjenkins.duckdns.org:8080/job/TARDISVortexManipulator/
 dev-url: https://github.com/eccentricdevotion/TARDISVortexManipulator/
 url: http://eccentricdevotion.github.io/TARDIS/
@@ -26,59 +26,59 @@ permissions:
     default: op
 commands:
   vortexmanipulator:
-    aliases: [ vm,tvm ]
+    aliases: [vm,tvm]
     description: Cheap and nasty time travel. Very bad for you.
     usage: "Usage: /<command> <world> <x> <y> <z>"
     permission: vm.teleport
     permission-message: "You need the permission '<permission>' to use this command!"
   vmmessage:
-    aliases: [ vmm,vmmsg ]
+    aliases: [vmm,vmmsg]
     description: Messages other Vortex Manipulator users.
     usage: "Usage: /<command> msg <player> <message>, /<command> list (in|out) <page>, /<command> read <#>, /<command> delete <#>, /<command> clear (in|out)"
     permission: vm.message
     permission-message: "You need the permission '<permission>' to use this command!"
   vmsave:
-    aliases: [ vms ]
+    aliases: [vms]
     description: Saves a Vortex Manipulator location.
     usage: "Usage: /<command> <save>"
     permission: vm.teleport
     permission-message: "You need the permission '<permission>' to use this command!"
   vmremove:
-    aliases: [ vmr ]
+    aliases: [vmr]
     description: Removes a saved Vortex Manipulator location.
     usage: "Usage: /<command> <save>"
     permission: vm.teleport
     permission-message: "You need the permission '<permission>' to use this command!"
   vmhelp:
-    aliases: [ vmh ]
+    aliases: [vmh]
     description: Displays help for the Vortex Manipulator plugin.
     usage: "Usage: /<command> <topic>"
   vmlifesigns:
-    aliases: [ vml,vmlife ]
+    aliases: [vml,vmlife]
     description: Gets Vortex Manipulator entity information.
     usage: "Usage: /<command> <save>"
     permission: vm.lifesigns
     permission-message: "You need the permission '<permission>' to use this command!"
   vmbeacon:
-    aliases: [ vmb ]
+    aliases: [vmb]
     description: Sends out a Vortex Manipulator beacon signal.
     usage: "Usage: /<command> <colour>"
     permission: vm.beacon
     permission-message: "You need the permission '<permission>' to use this command!"
   vmactivate:
-    aliases: [ vma ]
+    aliases: [vma]
     description: Activates a Vortex Manipulator that has been given with the /tardisgive command.
     usage: "Usage: /<command> <player>"
     permission: tardis.admin
     permission-message: "You need the permission '<permission>' to use this command!"
   vmgive:
-    aliases: [ vmg ]
+    aliases: [vmg]
     description: Gives Tachyon energy to a player's Vortex Manipulator.
     usage: "Usage: /<command> <player> <amount>"
     permission: tardis.admin
     permission-message: "You need the permission '<permission>' to use this command!"
   vmdatabase:
-    aliases: [ vmd ]
+    aliases: [vmd]
     description: Converts SQLite database records to MySQL.
     usage: "Usage: /<command> convert_database"
     permission: tardis.admin

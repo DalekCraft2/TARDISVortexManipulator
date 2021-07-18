@@ -87,24 +87,24 @@ public class Converter implements Runnable {
                             String string;
                             try {
                                 switch (table) {
-                                    case beacons:
+                                    case beacons -> {
                                         string = String.format(Sql.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
                                         stringBuilder.append(string);
-                                        break;
-                                    case manipulator:
+                                    }
+                                    case manipulator -> {
                                         string = String.format(Sql.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
                                         stringBuilder.append(string);
-                                        break;
-                                    case messages:
+                                    }
+                                    case messages -> {
                                         string = String.format(Sql.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
                                         stringBuilder.append(string);
-                                        break;
-                                    case saves:
+                                    }
+                                    case saves -> {
                                         string = String.format(Sql.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
                                         stringBuilder.append(string);
-                                        break;
-                                    default:
-                                        break;
+                                    }
+                                    default -> {
+                                    }
                                 }
                             } catch (MissingFormatArgumentException e) {
                                 sender.sendMessage(plugin.getPluginName() + "VALUES " + table);
