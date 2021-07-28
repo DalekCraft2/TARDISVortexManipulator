@@ -75,19 +75,19 @@ public class Main {
                 bufferedWriter.newLine();
                 Statement statement = connection.createStatement();
                 int i = 0;
-                for (Sql.TABLE table : Sql.TABLE.values()) {
+                for (SQL.TABLE table : SQL.TABLE.values()) {
                     console.println("Reading and writing " + table.toString() + " table");
-                    bufferedWriter.write(Sql.SEPARATOR);
+                    bufferedWriter.write(SQL.SEPARATOR);
                     bufferedWriter.newLine();
                     bufferedWriter.newLine();
-                    bufferedWriter.write(Sql.COMMENT);
+                    bufferedWriter.write(SQL.COMMENT);
                     bufferedWriter.newLine();
-                    bufferedWriter.write(Sql.STRUCTURE + table);
+                    bufferedWriter.write(SQL.STRUCTURE + table);
                     bufferedWriter.newLine();
-                    bufferedWriter.write(Sql.COMMENT);
+                    bufferedWriter.write(SQL.COMMENT);
                     bufferedWriter.newLine();
                     bufferedWriter.newLine();
-                    bufferedWriter.write(String.format(Sql.CREATES.get(i), prefix));
+                    bufferedWriter.write(String.format(SQL.CREATES.get(i), prefix));
                     bufferedWriter.newLine();
                     bufferedWriter.newLine();
                     String count = "SELECT COUNT(*) AS count FROM " + table;
@@ -100,14 +100,14 @@ public class Main {
                         ResultSet resultSet = statement.executeQuery(query);
                         if (resultSet.isBeforeFirst()) {
                             int b = 1;
-                            bufferedWriter.write(Sql.COMMENT);
+                            bufferedWriter.write(SQL.COMMENT);
                             bufferedWriter.newLine();
-                            bufferedWriter.write(Sql.DUMP + table);
+                            bufferedWriter.write(SQL.DUMP + table);
                             bufferedWriter.newLine();
-                            bufferedWriter.write(Sql.COMMENT);
+                            bufferedWriter.write(SQL.COMMENT);
                             bufferedWriter.newLine();
                             bufferedWriter.newLine();
-                            bufferedWriter.write(String.format(Sql.INSERTS.get(i), prefix));
+                            bufferedWriter.write(String.format(SQL.INSERTS.get(i), prefix));
                             bufferedWriter.newLine();
                             while (resultSet.next()) {
                                 String end = (b == c) ? ";" : ",";
@@ -115,19 +115,19 @@ public class Main {
                                 String string;
                                 switch (table) {
                                     case beacons -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
                                         bufferedWriter.write(string);
                                     }
                                     case manipulator -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
                                         bufferedWriter.write(string);
                                     }
                                     case messages -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
                                         bufferedWriter.write(string);
                                     }
                                     case saves -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
                                         bufferedWriter.write(string);
                                     }
                                     default -> {
@@ -139,7 +139,7 @@ public class Main {
                     }
                     i++;
                 }
-                bufferedWriter.write(Sql.SEPARATOR);
+                bufferedWriter.write(SQL.SEPARATOR);
             }
         } catch (SQLException e) {
             console.println("***** SQL ERROR: " + e.getMessage());

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.database;
 
-import me.eccentric_nz.tardisvortexmanipulator.TardisVortexManipulatorPlugin;
+import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulatorPlugin;
 import org.bukkit.command.CommandSender;
 
 import java.io.File;
@@ -28,8 +28,8 @@ import java.util.MissingFormatArgumentException;
  */
 public class Converter implements Runnable {
 
-    private final TardisVortexManipulatorPlugin plugin;
-    private final TvmDatabase service = TvmDatabase.getInstance();
+    private final TARDISVortexManipulatorPlugin plugin;
+    private final TVMDatabase service = TVMDatabase.getInstance();
     private final Connection connection = service.getConnection();
     private final Connection sqliteConnection;
     private final String prefix;
@@ -41,7 +41,7 @@ public class Converter implements Runnable {
      * @param plugin the output window of the tool
      * @param sender the person who ran the command
      */
-    public Converter(TardisVortexManipulatorPlugin plugin, CommandSender sender) throws Exception {
+    public Converter(TARDISVortexManipulatorPlugin plugin, CommandSender sender) throws Exception {
         this.plugin = plugin;
         this.sender = sender;
         prefix = this.plugin.getPrefix();
@@ -63,7 +63,7 @@ public class Converter implements Runnable {
             Statement writeStatement = connection.createStatement();
             connection.setAutoCommit(false);
             int i = 0;
-            for (Sql.TABLE table : Sql.TABLE.values()) {
+            for (SQL.TABLE table : SQL.TABLE.values()) {
                 sender.sendMessage(plugin.getPluginName() + "Reading and writing " + table.toString() + " table");
                 String count = "SELECT COUNT(*) AS count FROM " + table;
                 ResultSet resultSetCount = readStatement.executeQuery(count);
@@ -77,7 +77,7 @@ public class Converter implements Runnable {
                         int b = 1;
                         StringBuilder stringBuilder = new StringBuilder();
                         try {
-                            stringBuilder.append(String.format(Sql.INSERTS.get(i), prefix));
+                            stringBuilder.append(String.format(SQL.INSERTS.get(i), prefix));
                         } catch (MissingFormatArgumentException missingFormatArgumentException) {
                             sender.sendMessage(plugin.getPluginName() + "INSERT " + table);
                         }
@@ -88,19 +88,19 @@ public class Converter implements Runnable {
                             try {
                                 switch (table) {
                                     case beacons -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
                                         stringBuilder.append(string);
                                     }
                                     case manipulator -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
                                         stringBuilder.append(string);
                                     }
                                     case messages -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
                                         stringBuilder.append(string);
                                     }
                                     case saves -> {
-                                        string = String.format(Sql.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
+                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
                                         stringBuilder.append(string);
                                     }
                                     default -> {
