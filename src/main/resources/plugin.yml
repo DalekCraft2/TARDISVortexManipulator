@@ -1,5 +1,5 @@
 authors: [eccentric_nz]
-main: me.eccentric_nz.tardisvortexmanipulator.TardisVortexManipulatorPlugin
+main: me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulatorPlugin
 name: TARDISVortexManipulator
 description: Vortex manipulator. Cheap and nasty time travel. Very bad for you. I'm trying to give it up.
 version: ${project.version}
