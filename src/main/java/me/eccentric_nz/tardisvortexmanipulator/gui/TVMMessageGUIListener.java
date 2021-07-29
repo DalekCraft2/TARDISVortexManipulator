@@ -111,7 +111,7 @@ public class TVMMessageGUIListener extends TVMGUICommon implements Listener {
                 new TVMQueryFactory(plugin).setReadStatus(message_id);
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a message!");
+            p.sendMessage(plugin.getMessagePrefix() + "Select a message!");
         }
     }
 
@@ -127,10 +127,10 @@ public class TVMMessageGUIListener extends TVMGUICommon implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("message_id", message_id);
                 new TVMQueryFactory(plugin).doDelete("messages", where);
-                p.sendMessage(plugin.getPluginName() + "Message deleted.");
+                p.sendMessage(plugin.getMessagePrefix() + "Message deleted.");
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a message!");
+            p.sendMessage(plugin.getMessagePrefix() + "Select a message!");
         }
     }
 }

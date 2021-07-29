@@ -59,11 +59,11 @@ public class TVMCommand implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "Command can only be used by a player!");
+                sender.sendMessage(plugin.getMessagePrefix() + "Command can only be used by a player!");
                 return true;
             }
             if (!player.hasPermission("vm.teleport")) {
-                player.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             ItemStack itemStack = player.getInventory().getItemInMainHand();
@@ -83,17 +83,17 @@ public class TVMCommand implements CommandExecutor {
                 }
                 if (args.length > 0 && args[0].equalsIgnoreCase("go")) {
                     if (args.length < 2) {
-                        player.sendMessage(plugin.getPluginName() + "You need to specify a save name!");
+                        player.sendMessage(plugin.getMessagePrefix() + "You need to specify a save name!");
                         return true;
                     }
                     // check save exists
                     TVMResultSetWarpByName resultSetWarp = new TVMResultSetWarpByName(plugin, uuid, args[1]);
                     if (!resultSetWarp.resultSet()) {
-                        player.sendMessage(plugin.getPluginName() + "Save does not exist!");
+                        player.sendMessage(plugin.getMessagePrefix() + "Save does not exist!");
                         return true;
                     }
                     Location location = resultSetWarp.getWarp();
-                    player.sendMessage(plugin.getPluginName() + "Standby for Vortex travel to " + args[1] + "...");
+                    player.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel to " + args[1] + "...");
                     while (!location.getChunk().isLoaded()) {
                         location.getChunk().load();
                     }
@@ -108,7 +108,7 @@ public class TVMCommand implements CommandExecutor {
                     }
                     int required = plugin.getConfig().getInt("tachyon_use.saved") * players.size();
                     if (!TVMUtils.checkTachyonLevel(uuid, required)) {
-                        player.sendMessage(plugin.getPluginName() + "You need at least " + required + " tachyons to travel!");
+                        player.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
                         return true;
                     }
                     TVMUtils.movePlayers(players, location, player.getLocation().getWorld());
@@ -125,12 +125,12 @@ public class TVMCommand implements CommandExecutor {
                     case 1, 2, 3 -> {
                         // check world is an actual world
                         if (plugin.getServer().getWorld(args[0]) == null) {
-                            player.sendMessage(plugin.getPluginName() + "World does not exist!");
+                            player.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
                             return true;
                         }
                         // check world is enabled for travel
                         if (!containsIgnoreCase(args[0], plugin.getTardisApi().getWorlds())) {
-                            player.sendMessage(plugin.getPluginName() + "You cannot travel to this world using the Vortex Manipulator!");
+                            player.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
                             return true;
                         }
                         required = plugin.getConfig().getInt("tachyon_use.travel.world");
@@ -148,12 +148,12 @@ public class TVMCommand implements CommandExecutor {
                         } else {
                             world = plugin.getServer().getWorld(args[0]);
                             if (world == null) {
-                                player.sendMessage(plugin.getPluginName() + "World does not exist!");
+                                player.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
                                 return true;
                             }
                             // check world is enabled for travel
                             if (!containsIgnoreCase(args[0], plugin.getTardisApi().getWorlds())) {
-                                player.sendMessage(plugin.getPluginName() + "You cannot travel to this world using the Vortex Manipulator!");
+                                player.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
                                 return true;
                             }
                         }
@@ -177,13 +177,13 @@ public class TVMCommand implements CommandExecutor {
                                 z = Double.parseDouble(args[3]);
                             }
                         } catch (NumberFormatException e) {
-                            player.sendMessage(plugin.getPluginName() + "Could not parse coordinates!");
+                            player.sendMessage(plugin.getMessagePrefix() + "Could not parse coordinates!");
                             return true;
                         }
                         location = new Location(world, x, y, z);
                         // check block has space for player
                         if (!location.getBlock().getType().equals(Material.AIR)) {
-                            player.sendMessage(plugin.getPluginName() + "Destination block is not AIR! Adjusting...");
+                            player.sendMessage(plugin.getMessagePrefix() + "Destination block is not AIR! Adjusting...");
                             // get highest block at these coords
                             int highest = location.getWorld().getHighestBlockYAt(location);
                             location.setY(highest);
@@ -206,11 +206,11 @@ public class TVMCommand implements CommandExecutor {
                 }
                 int actual = required * players.size();
                 if (!TVMUtils.checkTachyonLevel(uuid, actual)) {
-                    player.sendMessage(plugin.getPluginName() + "You need at least " + actual + " tachyons to travel!");
+                    player.sendMessage(plugin.getMessagePrefix() + "You need at least " + actual + " tachyons to travel!");
                     return true;
                 }
                 if (location != null) {
-                    player.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+                    player.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
                     while (!location.getChunk().isLoaded()) {
                         location.getChunk().load();
                     }
@@ -218,11 +218,11 @@ public class TVMCommand implements CommandExecutor {
                     // remove tachyons
                     new TVMQueryFactory(plugin).alterTachyons(uuid, -actual);
                 } else {
-                    player.sendMessage(plugin.getPluginName() + "No location could be found within those parameters.");
+                    player.sendMessage(plugin.getMessagePrefix() + "No location could be found within those parameters.");
                 }
                 // do stuff
             } else {
-                player.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
             }
             return true;
         }

@@ -117,7 +117,7 @@ public class TVMUtils {
      * @param page           the page number of this list
      */
     public static void sendSaveList(Player player, TVMResultSetSaves resultSetSaves, int page) {
-        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getPluginName() + ChatColor.AQUA + "Saves (page " + page + ":");
+        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getMessagePrefix() + ChatColor.AQUA + "Saves (page " + page + ":");
         resultSetSaves.getSaves().forEach((s) -> player.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ()));
     }
 
@@ -129,7 +129,7 @@ public class TVMUtils {
      * @param page           the page number of this list
      */
     public static void sendInboxList(Player player, TVMResultSetInbox resultSetInbox, int page) {
-        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getPluginName() + ChatColor.AQUA + "Inbox (page " + page + "):");
+        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getMessagePrefix() + ChatColor.AQUA + "Inbox (page " + page + "):");
         resultSetInbox.getMail().forEach((tvmMessage) -> {
             ChatColor colour = (tvmMessage.isRead()) ? ChatColor.DARK_GRAY : ChatColor.GRAY;
             player.sendMessage(colour + "" + tvmMessage.getId() + ": " + tvmMessage.getDate() + " - " + tvmMessage.getMessage().substring(0, 12));
@@ -144,7 +144,7 @@ public class TVMUtils {
      * @param page            the page number of this list
      */
     public static void sendOutboxList(Player player, TVMResultSetOutbox resultSetOutbox, int page) {
-        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getPluginName() + ChatColor.AQUA + "Outbox (page " + page + "):");
+        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getMessagePrefix() + ChatColor.AQUA + "Outbox (page " + page + "):");
         resultSetOutbox.getMail().forEach((tvmMessage) -> player.sendMessage(tvmMessage.getId() + " - " + tvmMessage.getDate() + " - " + tvmMessage.getMessage().substring(0, 12)));
     }
 
@@ -155,7 +155,7 @@ public class TVMUtils {
      * @param tvmMessage the message to read
      */
     public static void readMessage(Player player, TVMMessage tvmMessage) {
-        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getPluginName() + ChatColor.AQUA + TARDISVortexManipulatorPlugin.plugin.getServer().getOfflinePlayer(tvmMessage.getWho()).getName() + " - " + tvmMessage.getDate());
+        player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getMessagePrefix() + ChatColor.AQUA + TARDISVortexManipulatorPlugin.plugin.getServer().getOfflinePlayer(tvmMessage.getWho()).getName() + " - " + tvmMessage.getDate());
         player.sendMessage(tvmMessage.getMessage());
     }
 

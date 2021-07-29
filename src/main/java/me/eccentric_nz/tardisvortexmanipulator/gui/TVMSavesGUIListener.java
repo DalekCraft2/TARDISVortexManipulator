@@ -110,10 +110,10 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("save_id", rss.getId());
                 new TVMQueryFactory(plugin).doDelete("saves", where);
-                p.sendMessage(plugin.getPluginName() + "Save deleted.");
+                p.sendMessage(plugin.getMessagePrefix() + "Save deleted.");
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a save!");
+            p.sendMessage(plugin.getMessagePrefix() + "Select a save!");
         }
     }
 
@@ -137,11 +137,11 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
                 int required = plugin.getConfig().getInt("tachyon_use.travel.saved") * players.size();
                 if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
                     close(p);
-                    p.sendMessage(plugin.getPluginName() + "You need at least " + required + " tachyons to travel!");
+                    p.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
                     return;
                 }
                 Location l = rss.getWarp();
-                p.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+                p.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
                 while (!l.getChunk().isLoaded()) {
                     l.getChunk().load();
                 }
@@ -150,7 +150,7 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
                 new TVMQueryFactory(plugin).alterTachyons(p.getUniqueId().toString(), -required);
             }
         } else {
-            p.sendMessage(plugin.getPluginName() + "Select a save!");
+            p.sendMessage(plugin.getMessagePrefix() + "Select a save!");
         }
     }
 }

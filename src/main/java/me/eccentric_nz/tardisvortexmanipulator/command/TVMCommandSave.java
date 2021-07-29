@@ -48,11 +48,11 @@ public class TVMCommandSave implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "That command cannot be used from the console!");
+                sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
                 return true;
             }
             if (!player.hasPermission("vm.teleport")) {
-                player.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             ItemStack itemStack = player.getInventory().getItemInMainHand();
@@ -66,13 +66,13 @@ public class TVMCommandSave implements CommandExecutor {
                     }
                 }
                 if (args.length < 1) {
-                    player.sendMessage(plugin.getPluginName() + "You need to specify a save name or page number!");
+                    player.sendMessage(plugin.getMessagePrefix() + "You need to specify a save name or page number!");
                     return true;
                 }
                 try {
                     int page = Integer.parseInt(args[0]);
                     if (page <= 0) {
-                        player.sendMessage(plugin.getPluginName() + "Invalid page number!");
+                        player.sendMessage(plugin.getMessagePrefix() + "Invalid page number!");
                         return true;
                     }
                     int start = (page * 10) - 10;
@@ -86,7 +86,7 @@ public class TVMCommandSave implements CommandExecutor {
                     // check for existing save
                     TVMResultSetWarpByName resultSetWarp = new TVMResultSetWarpByName(plugin, uuid, args[0]);
                     if (resultSetWarp.resultSet()) {
-                        player.sendMessage(plugin.getPluginName() + "You already have a save with that name!");
+                        player.sendMessage(plugin.getMessagePrefix() + "You already have a save with that name!");
                         return true;
                     }
                     Location location = player.getLocation();
@@ -100,11 +100,11 @@ public class TVMCommandSave implements CommandExecutor {
                     set.put("yaw", location.getYaw());
                     set.put("pitch", location.getPitch());
                     new TVMQueryFactory(plugin).doInsert("saves", set);
-                    sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator location (" + args[0] + ") saved!");
+                    sender.sendMessage(plugin.getMessagePrefix() + "Vortex Manipulator location (" + args[0] + ") saved!");
                     return true;
                 }
             } else {
-                player.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
                 return true;
             }
         }

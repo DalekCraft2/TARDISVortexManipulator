@@ -27,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -81,7 +82,7 @@ public class TVMRecipe {
                 recipe.setIngredient(c, material1);
             });
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + ChatColor.RED + "Recipe failed! " + ChatColor.RESET + "Check the config file!");
+            plugin.getLogger().log(Level.SEVERE, "Vortex Manipulator recipe failed! Check the config file!");
         }
         // add the recipe to TARDIS' list
         plugin.getTardisApi().getShapedRecipes().put("Vortex Manipulator", recipe);

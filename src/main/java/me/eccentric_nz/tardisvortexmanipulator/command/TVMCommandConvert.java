@@ -37,7 +37,7 @@ public class TVMCommandConvert implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         if (command.getName().equalsIgnoreCase("vmdatabase")) {
             if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             if (args.length < 1 || !args[0].equalsIgnoreCase("convert_database")) {

@@ -52,18 +52,18 @@ public class TVMCommandBeacon implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "That command cannot be used from the console!");
+                sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
                 return true;
             }
             if (!player.hasPermission("vm.beacon")) {
-                player.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             ItemStack itemStack = player.getInventory().getItemInMainHand();
             if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING) && itemStack.getItemMeta().getPersistentDataContainer().get(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING).equals("vortex_manipulator")) {
                 int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
                 if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
-                    player.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to set a beacon signal!");
+                    player.sendMessage(plugin.getMessagePrefix() + "You don't have enough tachyons to set a beacon signal!");
                     return true;
                 }
                 UUID uuid = player.getUniqueId();
@@ -88,7 +88,7 @@ public class TVMCommandBeacon implements CommandExecutor {
                 }
                 Parameters params = new Parameters(player, flags);
                 if (!plugin.getTardisApi().getRespect().getRespect(location, params)) {
-                    player.sendMessage(plugin.getPluginName() + "You are not permitted to set a beacon signal here!");
+                    player.sendMessage(plugin.getMessagePrefix() + "You are not permitted to set a beacon signal here!");
                     return true;
                 }
                 Block block = location.getBlock().getRelative(BlockFace.DOWN);
@@ -107,9 +107,9 @@ public class TVMCommandBeacon implements CommandExecutor {
                 plugin.getBeaconSetters().add(uuid);
                 // remove tachyons
                 queryFactory.alterTachyons(uuidString, -required);
-                player.sendMessage(plugin.getPluginName() + "Beacon signal set, don't move!");
+                player.sendMessage(plugin.getMessagePrefix() + "Beacon signal set, don't move!");
             } else {
-                player.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
             }
             return true;
         }

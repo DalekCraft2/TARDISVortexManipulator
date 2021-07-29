@@ -23,6 +23,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -137,7 +138,7 @@ public class TVMConfig {
             i++;
         }
         if (i > 0) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
+            plugin.getLogger().log(Level.INFO, "Added " + ChatColor.AQUA + i + ChatColor.RESET + " new items to config");
         }
         plugin.saveConfig();
     }

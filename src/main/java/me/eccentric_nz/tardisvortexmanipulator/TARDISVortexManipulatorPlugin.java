@@ -32,7 +32,6 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -40,6 +39,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class TARDISVortexManipulatorPlugin extends JavaPlugin {
 
@@ -48,7 +48,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
     private final List<Location> blocks = new ArrayList<>();
     private final List<UUID> beaconSetters = new ArrayList<>();
     private final List<UUID> travellers = new ArrayList<>();
-    private String pluginName;
+    private String messagePrefix;
     private NamespacedKey itemKey;
     private TardisAPI tardisApi;
     private TARDIS tardis;
@@ -64,10 +64,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         itemKey = new NamespacedKey(this, "item");
-        PluginDescriptionFile pluginDescriptionFile = getDescription();
-        pluginName = ChatColor.GOLD + "[" + pluginDescriptionFile.getName() + "]" + ChatColor.RESET + " ";
-        PluginDescriptionFile pdfFile = getDescription();
-        pluginName = ChatColor.GOLD + "[" + pdfFile.getName() + "]" + ChatColor.RESET + " ";
+        messagePrefix = ChatColor.GOLD + "[" + getDescription().getName() + "]" + ChatColor.RESET + " ";
         saveDefaultConfig();
         new TVMConfig(this).checkConfig();
         pluginManager = getServer().getPluginManager();
@@ -76,7 +73,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
          */
         Plugin tardis = pluginManager.getPlugin("TARDIS");
         if (tardis == null || !pluginManager.isPluginEnabled("TARDIS")) {
-            System.err.println("[TARDISVortexManipulator] Cannot find TARDIS!");
+            getLogger().log(java.util.logging.Level.SEVERE, "Cannot find TARDIS!");
             pluginManager.disablePlugin(this);
             return;
         }
@@ -86,7 +83,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
         String version = this.tardis.getDescription().getVersion().split("-")[0];
         Version tardisVersion = new Version(version);
         if (tardisVersion.compareTo(minVersion) < 0) {
-            System.err.println("[TARDISVortexManipulator] You need a newer version of TARDIS (v4.7.5)!");
+            getLogger().log(java.util.logging.Level.SEVERE, "You need a newer version of TARDIS (v4.7.5)!");
             pluginManager.disablePlugin(this);
             return;
         }
@@ -101,8 +98,8 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
         startRecharger();
     }
 
-    public String getPluginName() {
-        return pluginName;
+    public String getMessagePrefix() {
+        return messagePrefix;
     }
 
     public NamespacedKey getItemKey() {
@@ -134,7 +131,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
                 mysql.createTables();
             }
         } catch (Exception e) {
-            getServer().getConsoleSender().sendMessage(pluginName + "Connection and Tables Error: " + e);
+            getLogger().log(Level.SEVERE, "Connection and Tables Error: " + e.getMessage());
         }
     }
 
@@ -187,7 +184,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
      */
     public void debug(Object object) {
         if (getConfig().getBoolean("debug")) {
-            getServer().getConsoleSender().sendMessage(pluginName + "Debug: " + object);
+            getLogger().log(Level.CONFIG, (String) object);
         }
     }
 }

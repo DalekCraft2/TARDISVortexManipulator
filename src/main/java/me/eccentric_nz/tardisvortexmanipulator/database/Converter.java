@@ -51,26 +51,26 @@ public class Converter implements Runnable {
     @Override
     public void run() {
         if (plugin.getConfig().getString("storage.database").equals("sqlite")) {
-            sender.sendMessage(plugin.getPluginName() + "You need to set the database provider to 'mysql' in the config!");
+            sender.sendMessage(plugin.getMessagePrefix() + "You need to set the database provider to 'mysql' in the config!");
             return;
         }
         if (!prefix.isEmpty()) {
-            sender.sendMessage(plugin.getPluginName() + "***** Using prefix: " + prefix);
+            sender.sendMessage(plugin.getMessagePrefix() + "***** Using prefix: " + prefix);
         }
-        sender.sendMessage(plugin.getPluginName() + "Starting conversion process, please wait. This may cause the server to become unresponsive!");
+        sender.sendMessage(plugin.getMessagePrefix() + "Starting conversion process, please wait. This may cause the server to become unresponsive!");
         try {
             Statement readStatement = sqliteConnection.createStatement();
             Statement writeStatement = connection.createStatement();
             connection.setAutoCommit(false);
             int i = 0;
             for (SQL.TABLE table : SQL.TABLE.values()) {
-                sender.sendMessage(plugin.getPluginName() + "Reading and writing " + table.toString() + " table");
+                sender.sendMessage(plugin.getMessagePrefix() + "Reading and writing " + table.toString() + " table");
                 String count = "SELECT COUNT(*) AS count FROM " + table;
                 ResultSet resultSetCount = readStatement.executeQuery(count);
                 if (resultSetCount.isBeforeFirst()) {
                     resultSetCount.next();
                     int c = resultSetCount.getInt("count"); // TODO Rename this variable, and the previous "count".
-                    sender.sendMessage(plugin.getPluginName() + "Found " + c + " " + table + " records");
+                    sender.sendMessage(plugin.getMessagePrefix() + "Found " + c + " " + table + " records");
                     String query = "SELECT * FROM " + table;
                     ResultSet resultSet = readStatement.executeQuery(query);
                     if (resultSet.isBeforeFirst()) {
@@ -79,7 +79,7 @@ public class Converter implements Runnable {
                         try {
                             stringBuilder.append(String.format(SQL.INSERTS.get(i), prefix));
                         } catch (MissingFormatArgumentException missingFormatArgumentException) {
-                            sender.sendMessage(plugin.getPluginName() + "INSERT " + table);
+                            sender.sendMessage(plugin.getMessagePrefix() + "INSERT " + table);
                         }
                         while (resultSet.next()) {
                             String end = (b == c) ? ";" : ",";
@@ -107,7 +107,7 @@ public class Converter implements Runnable {
                                     }
                                 }
                             } catch (MissingFormatArgumentException e) {
-                                sender.sendMessage(plugin.getPluginName() + "VALUES " + table);
+                                sender.sendMessage(plugin.getMessagePrefix() + "VALUES " + table);
                             }
                         }
                         String insert = stringBuilder.toString();
@@ -119,7 +119,7 @@ public class Converter implements Runnable {
             writeStatement.executeBatch();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            sender.sendMessage(plugin.getPluginName() + "***** SQL ERROR: " + e.getMessage());
+            sender.sendMessage(plugin.getMessagePrefix() + "***** SQL ERROR: " + e.getMessage());
             e.printStackTrace();
             return;
         } finally {
@@ -127,11 +127,11 @@ public class Converter implements Runnable {
                 try {
                     sqliteConnection.close();
                 } catch (SQLException e) {
-                    sender.sendMessage(plugin.getPluginName() + "***** DATABASE CLOSE ERROR: " + e.getMessage());
+                    sender.sendMessage(plugin.getMessagePrefix() + "***** DATABASE CLOSE ERROR: " + e.getMessage());
                 }
             }
         }
-        sender.sendMessage(plugin.getPluginName() + "***** Your SQLite database has been converted to MySQL!");
+        sender.sendMessage(plugin.getMessagePrefix() + "***** Your SQLite database has been converted to MySQL!");
     }
 
     public Connection getSqliteConnection() throws Exception {

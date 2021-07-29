@@ -49,24 +49,24 @@ public class TVMCommandLifesigns implements CommandExecutor {
                 player = (Player) sender;
             }
             if (player == null) {
-                sender.sendMessage(plugin.getPluginName() + "That command cannot be used from the console!");
+                sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
                 return true;
             }
             if (!player.hasPermission("vm.lifesigns")) {
-                player.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             ItemStack itemStack = player.getInventory().getItemInMainHand();
             if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING) && itemStack.getItemMeta().getPersistentDataContainer().get(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING).equals("vortex_manipulator")) {
                 int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
                 if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
-                    player.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to use the lifesigns scanner!");
+                    player.sendMessage(plugin.getMessagePrefix() + "You don't have enough tachyons to use the lifesigns scanner!");
                     return true;
                 }
                 // remove tachyons
                 new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
                 if (args.length == 0) {
-                    player.sendMessage(plugin.getPluginName() + "Nearby entities:");
+                    player.sendMessage(plugin.getMessagePrefix() + "Nearby entities:");
                     // scan nearby entities
                     double distance = plugin.getConfig().getDouble("lifesign_scan_distance");
                     List<Entity> nearbyEntities = player.getNearbyEntities(distance, distance, distance);
@@ -107,29 +107,29 @@ public class TVMCommandLifesigns implements CommandExecutor {
                     }
                 }
                 if (args.length < 1) {
-                    player.sendMessage(plugin.getPluginName() + "You need to specify a player name!");
+                    player.sendMessage(plugin.getMessagePrefix() + "You need to specify a player name!");
                     return true;
                 }
                 Player scanned = plugin.getServer().getPlayer(args[0]);
                 if (scanned == null) {
-                    player.sendMessage(plugin.getPluginName() + "Could not find a player with that name!");
+                    player.sendMessage(plugin.getMessagePrefix() + "Could not find a player with that name!");
                     return true;
                 }
                 if (!scanned.isOnline()) {
-                    player.sendMessage(plugin.getPluginName() + args[0] + " is not online!");
+                    player.sendMessage(plugin.getMessagePrefix() + args[0] + " is not online!");
                     return true;
                 }
                 // getHealth() / getMaxHealth() * getHealthScale()
                 double health = scanned.getHealth() / scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() * scanned.getHealthScale();
                 float hunger = (scanned.getFoodLevel() / 20F) * 100;
                 int air = scanned.getRemainingAir();
-                player.sendMessage(plugin.getPluginName() + args[0] + "'s lifesigns:");
+                player.sendMessage(plugin.getMessagePrefix() + args[0] + "'s lifesigns:");
                 player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
                 player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
                 player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
                 player.sendMessage("Air: ~" + (air / 20) + " seconds remaining");
             } else {
-                player.sendMessage(plugin.getPluginName() + "You don't have a Vortex Manipulator in your hand!");
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
             }
             return true;
         }

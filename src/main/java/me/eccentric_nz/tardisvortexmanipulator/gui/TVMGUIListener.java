@@ -346,7 +346,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         List<String> lore = displayMeta.getLore();
         String name = lore.get(0);
         if (name.isEmpty()) {
-            player.sendMessage(plugin.getPluginName() + "You need to enter a save name!");
+            player.sendMessage(plugin.getMessagePrefix() + "You need to enter a save name!");
             return;
         }
         Location location = player.getLocation();
@@ -361,18 +361,18 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         set.put("pitch", location.getPitch());
         queryFactory.doInsert("saves", set);
         close(player);
-        player.sendMessage(plugin.getPluginName() + "Current location saved.");
+        player.sendMessage(plugin.getMessagePrefix() + "Current location saved.");
     }
 
     private void scanLifesigns(Player player, InventoryView view) {
         close(player);
         if (!player.hasPermission("vm.lifesigns")) {
-            player.sendMessage(plugin.getPluginName() + "You don't have permission to use the lifesigns scanner!");
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use the lifesigns scanner!");
             return;
         }
         int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
         if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
-            player.sendMessage(plugin.getPluginName() + "You don't have enough tachyons to use the lifesigns scanner!");
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have enough tachyons to use the lifesigns scanner!");
             return;
         }
         // remove tachyons
@@ -383,7 +383,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         List<String> lore = displayMeta.getLore();
         String playerName = lore.get(0).trim();
         if (playerName.isEmpty()) {
-            player.sendMessage(plugin.getPluginName() + "Nearby entities:");
+            player.sendMessage(plugin.getMessagePrefix() + "Nearby entities:");
             // scan nearby entities
             double d = plugin.getConfig().getDouble("lifesign_scan_distance");
             List<Entity> nearbyEntities = player.getNearbyEntities(d, d, d);
@@ -425,11 +425,11 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         } else {
             Player scanned = plugin.getServer().getPlayer(playerName);
             if (scanned == null) {
-                player.sendMessage(plugin.getPluginName() + "Could not find a player with that name!");
+                player.sendMessage(plugin.getMessagePrefix() + "Could not find a player with that name!");
                 return;
             }
             if (!scanned.isOnline()) {
-                player.sendMessage(plugin.getPluginName() + playerName + " is not online!");
+                player.sendMessage(plugin.getMessagePrefix() + playerName + " is not online!");
                 return;
             }
             // getHealth() / getMaxHealth() * getHealthScale()
@@ -437,7 +437,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             double health = scanned.getHealth() / maxHealth * scanned.getHealthScale();
             float hunger = (scanned.getFoodLevel() / 20F) * 100;
             int air = scanned.getRemainingAir();
-            player.sendMessage(plugin.getPluginName() + playerName + "'s lifesigns:");
+            player.sendMessage(plugin.getMessagePrefix() + playerName + "'s lifesigns:");
             player.sendMessage("Has been alive for: " + TVMUtils.convertTicksToTime(scanned.getTicksLived()));
             player.sendMessage("Health: " + String.format("%.1f", health / 2) + " hearts");
             player.sendMessage("Hunger bar: " + String.format("%.2f", hunger) + "%");
@@ -459,7 +459,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
     private void message(Player p) {
         close(p);
         if (!p.hasPermission("vm.message")) {
-            p.sendMessage(plugin.getPluginName() + "You don't have permission to use Vortex messages!");
+            p.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use Vortex messages!");
             return;
         }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -474,7 +474,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
     private void setBeacon(Player p) {
         if (!p.hasPermission("vm.beacon")) {
             close(p);
-            p.sendMessage(plugin.getPluginName() + "You don't have permission to set a beacon signal!");
+            p.sendMessage(plugin.getMessagePrefix() + "You don't have permission to set a beacon signal!");
             return;
         }
         UUID uuid = p.getUniqueId();
@@ -503,7 +503,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             Parameters params = new Parameters(p, flags);
             if (!plugin.getTardisApi().getRespect().getRespect(l, params)) {
                 close(p);
-                p.sendMessage(plugin.getPluginName() + "You are not permitted to set a beacon signal here!");
+                p.sendMessage(plugin.getMessagePrefix() + "You are not permitted to set a beacon signal here!");
                 return;
             }
             Block b = l.getBlock().getRelative(BlockFace.DOWN);
@@ -524,7 +524,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             queryFactory.alterTachyons(p.getUniqueId().toString(), -required);
         }
         close(p);
-        p.sendMessage(plugin.getPluginName() + message);
+        p.sendMessage(plugin.getMessagePrefix() + message);
     }
 
     private void doWarp(Player p, InventoryView view) {
@@ -569,13 +569,13 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 // check world is an actual world
                 if (plugin.getServer().getWorld(dest.get(0)) == null) {
                     close(p);
-                    p.sendMessage(plugin.getPluginName() + "World does not exist!");
+                    p.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
                     return;
                 }
                 // check world is enabled for travel
                 if (!plugin.getTardisApi().getWorlds().contains(dest.get(0))) {
                     close(p);
-                    p.sendMessage(plugin.getPluginName() + "You cannot travel to this world using the Vortex Manipulator!");
+                    p.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
                     return;
                 }
                 worlds.add(dest.get(0));
@@ -592,13 +592,13 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     w = plugin.getServer().getWorld(dest.get(0));
                     if (w == null) {
                         close(p);
-                        p.sendMessage(plugin.getPluginName() + "World does not exist!");
+                        p.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
                         return;
                     }
                     // check world is enabled for travel
                     if (!plugin.getTardisApi().getWorlds().contains(dest.get(0))) {
                         close(p);
-                        p.sendMessage(plugin.getPluginName() + "You cannot travel to this world using the Vortex Manipulator!");
+                        p.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
                         return;
                     }
                 }
@@ -623,13 +623,13 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     }
                 } catch (NumberFormatException e) {
                     close(p);
-                    p.sendMessage(plugin.getPluginName() + "Could not parse coordinates!");
+                    p.sendMessage(plugin.getMessagePrefix() + "Could not parse coordinates!");
                     return;
                 }
                 l = new Location(w, x, y, z);
                 // check block has space for player
                 if (!l.getBlock().getType().equals(Material.AIR)) {
-                    p.sendMessage(plugin.getPluginName() + "Destination block is not AIR! Adjusting...");
+                    p.sendMessage(plugin.getMessagePrefix() + "Destination block is not AIR! Adjusting...");
                     // get highest block at these coords
                     int highest = l.getWorld().getHighestBlockYAt(l);
                     l.setY(highest);
@@ -644,7 +644,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         UUID uuid = p.getUniqueId();
         if (!TVMUtils.checkTachyonLevel(uuid.toString(), required)) {
             close(p);
-            p.sendMessage(plugin.getPluginName() + "You need at least " + required + " tachyons to travel!");
+            p.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
             return;
         }
         if (l != null) {
@@ -660,10 +660,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             }
             int actual = required * players.size();
             if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                p.sendMessage(plugin.getPluginName() + "You need at least " + actual + " tachyons to travel!");
+                p.sendMessage(plugin.getMessagePrefix() + "You need at least " + actual + " tachyons to travel!");
                 return;
             }
-            p.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+            p.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
             while (!l.getChunk().isLoaded()) {
                 l.getChunk().load();
             }
@@ -671,7 +671,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             // remove tachyons
             queryFactory.alterTachyons(uuid.toString(), -actual);
         } else {
-            p.sendMessage(plugin.getPluginName() + "No location could be found within those parameters.");
+            p.sendMessage(plugin.getMessagePrefix() + "No location could be found within those parameters.");
         }
     }
 

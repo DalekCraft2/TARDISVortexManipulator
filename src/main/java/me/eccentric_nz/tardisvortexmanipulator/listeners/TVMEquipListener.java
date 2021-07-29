@@ -111,10 +111,10 @@ public class TVMEquipListener implements Listener {
                     int required = plugin.getConfig().getInt("tachyon_use.travel.to_block");
                     int actual = required * players.size();
                     if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                        player.sendMessage(plugin.getPluginName() + "You need at least " + actual + " tachyons to travel!");
+                        player.sendMessage(plugin.getMessagePrefix() + "You need at least " + actual + " tachyons to travel!");
                         return;
                     }
-                    player.sendMessage(plugin.getPluginName() + "Standby for Vortex travel...");
+                    player.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
                     // Random malfunction
                     Random random = new Random();
                     if (random.nextInt(100) < plugin.getConfig().getInt("block_travel_malfunction_chance")) {
@@ -134,7 +134,7 @@ public class TVMEquipListener implements Listener {
                         // check to ensure we have a valid alternate location before triggering the malfunction
                         // for this reason the actual malfunction rate may be lower than configured
                         if (randomLocation != null) {
-                            player.sendMessage(plugin.getPluginName() + "Vortex travel malfunction. Attempting to land in safe location..");
+                            player.sendMessage(plugin.getMessagePrefix() + "Vortex travel malfunction. Attempting to land in safe location..");
                             targetBlockLocation = randomLocation;
                         }
                     }

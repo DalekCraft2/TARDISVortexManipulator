@@ -39,16 +39,16 @@ public class TVMCommandActivate implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         if (command.getName().equalsIgnoreCase("vmactivate")) {
             if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             if (args.length < 1) {
-                sender.sendMessage(plugin.getPluginName() + "You need to specify a player name!");
+                sender.sendMessage(plugin.getMessagePrefix() + "You need to specify a player name!");
                 return true;
             }
             Player player = plugin.getServer().getPlayer(args[0]);
             if (player == null || !player.isOnline()) {
-                sender.sendMessage(plugin.getPluginName() + "Could not find player! Are they online?");
+                sender.sendMessage(plugin.getMessagePrefix() + "Could not find player! Are they online?");
                 return true;
             }
             String uuid = player.getUniqueId().toString();
@@ -58,9 +58,9 @@ public class TVMCommandActivate implements CommandExecutor {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", uuid);
                 new TVMQueryFactory(plugin).doInsert("manipulator", set);
-                sender.sendMessage(plugin.getPluginName() + "Vortex Manipulator activated!");
+                sender.sendMessage(plugin.getMessagePrefix() + "Vortex Manipulator activated!");
             } else {
-                sender.sendMessage(plugin.getPluginName() + "The Vortex Manipulator is already activated!");
+                sender.sendMessage(plugin.getMessagePrefix() + "The Vortex Manipulator is already activated!");
             }
             return true;
         }

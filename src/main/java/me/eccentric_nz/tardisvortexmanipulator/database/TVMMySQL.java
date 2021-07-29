@@ -21,6 +21,7 @@ import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulatorPlugin;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -50,14 +51,14 @@ public class TVMMySQL {
                 statement.executeUpdate(subbed);
             }
         } catch (SQLException e) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "MySQL create table error: " + e);
+            plugin.getLogger().log(Level.SEVERE, "MySQL create table error: " + e.getMessage());
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "MySQL close statement error: " + e);
+                plugin.getLogger().log(Level.SEVERE, "MySQL close statement error: " + e.getMessage());
             }
         }
     }

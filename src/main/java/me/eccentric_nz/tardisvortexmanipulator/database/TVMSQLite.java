@@ -21,6 +21,7 @@ import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulatorPlugin;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 /**
  * @author eccentric_nz
@@ -60,14 +61,14 @@ public class TVMSQLite {
             String queryManipulator = "CREATE TABLE IF NOT EXISTS manipulator (uuid TEXT PRIMARY KEY NOT NULL, tachyon_level INTEGER DEFAULT 0)";
             statement.executeUpdate(queryManipulator);
         } catch (SQLException e) {
-            plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "SQLite create table error: " + e);
+            plugin.getLogger().log(Level.SEVERE, "SQLite create table error: " + e.getMessage());
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.getServer().getConsoleSender().sendMessage(plugin.getPluginName() + "SQLite close statement error: " + e);
+                plugin.getLogger().log(Level.SEVERE, "SQLite close statement error: " + e.getMessage());
             }
         }
     }

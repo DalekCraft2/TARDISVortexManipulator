@@ -43,11 +43,11 @@ public class TVMCommandGive implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         if (command.getName().equalsIgnoreCase("vmgive")) {
             if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.getPluginName() + "You don't have permission to use that command!");
+                sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
             if (args.length < 2) {
-                sender.sendMessage(plugin.getPluginName() + "You need to specify a player and amount!");
+                sender.sendMessage(plugin.getMessagePrefix() + "You need to specify a player and amount!");
                 return true;
             }
             Player player = plugin.getServer().getPlayer(args[0]);
@@ -70,7 +70,7 @@ public class TVMCommandGive implements CommandExecutor {
                     try {
                         amount = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(plugin.getPluginName() + "The last argument must be a number, 'full', or 'empty'");
+                        sender.sendMessage(plugin.getMessagePrefix() + "The last argument must be a number, 'full', or 'empty'");
                         return true;
                     }
                     if (tachyonLevel + amount > full) {
@@ -84,9 +84,9 @@ public class TVMCommandGive implements CommandExecutor {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 new TVMQueryFactory(plugin).doUpdate("manipulator", set, where);
-                sender.sendMessage(plugin.getPluginName() + "Tachyon level set to " + amount);
+                sender.sendMessage(plugin.getMessagePrefix() + "Tachyon level set to " + amount);
             } else {
-                sender.sendMessage(plugin.getPluginName() + "Player does not have a Vortex Manipulator!");
+                sender.sendMessage(plugin.getMessagePrefix() + "Player does not have a Vortex Manipulator!");
             }
             return true;
         }
