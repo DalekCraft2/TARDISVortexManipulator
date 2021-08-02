@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulatorPlugin;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -322,7 +323,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             default -> combined = comp;
         }
         components.set(which, comp);
-        List<String> dlore = Arrays.asList(combined);
+        List<String> dlore = Arrays.asList(ChatColor.GRAY + combined);
         displayMeta.setLore(dlore);
         display.setItemMeta(displayMeta);
     }

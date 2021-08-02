@@ -55,7 +55,7 @@ public class TVMRecipe {
             itemStack = new ItemStack(material, amount);
         }
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.RESET + "Vortex Manipulator");
+        itemMeta.setDisplayName("Vortex Manipulator");
         if (!plugin.getConfig().getString("recipe.lore").equals("")) {
             List<String> lore = plugin.getConfig().getStringList("recipe.lore");
             lore.replaceAll(string -> ChatColor.translateAlternateColorCodes('&', string));
