@@ -33,11 +33,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class TVMCommandLifesigns implements CommandExecutor {
+public class TVMLifesignsCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
 
-    public TVMCommandLifesigns(TARDISVortexManipulatorPlugin plugin) {
+    public TVMLifesignsCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
     }
 

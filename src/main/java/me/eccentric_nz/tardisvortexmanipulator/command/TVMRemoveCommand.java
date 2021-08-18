@@ -29,11 +29,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-public class TVMCommandRemove implements CommandExecutor {
+public class TVMRemoveCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
 
-    public TVMCommandRemove(TARDISVortexManipulatorPlugin plugin) {
+    public TVMRemoveCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -17,39 +17,52 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulatorPlugin;
-import me.eccentric_nz.tardisvortexmanipulator.database.Converter;
+import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TVMCommandConvert implements CommandExecutor {
+import java.util.HashMap;
+
+public class TVMActivateCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
-    private final int full;
 
-    public TVMCommandConvert(TARDISVortexManipulatorPlugin plugin) {
+    public TVMActivateCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
-        full = this.plugin.getConfig().getInt("tachyon_use.max");
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmdatabase")) {
+        if (command.getName().equalsIgnoreCase("vmactivate")) {
             if (!sender.hasPermission("tardis.admin")) {
                 sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
                 return true;
             }
-            if (args.length < 1 || !args[0].equalsIgnoreCase("convert_database")) {
-                return false;
-            }
-            try {
-                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
-                return true;
-            } catch (Exception e) {
-                sender.sendMessage("Database conversion failed! " + e.getMessage());
+            if (args.length < 1) {
+                sender.sendMessage(plugin.getMessagePrefix() + "You need to specify a player name!");
                 return true;
             }
+            Player player = plugin.getServer().getPlayer(args[0]);
+            if (player == null || !player.isOnline()) {
+                sender.sendMessage(plugin.getMessagePrefix() + "Could not find player! Are they online?");
+                return true;
+            }
+            String uuid = player.getUniqueId().toString();
+            // check for existing record
+            TVMResultSetManipulator resultSetManipulator = new TVMResultSetManipulator(plugin, uuid);
+            if (!resultSetManipulator.resultSet()) {
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("uuid", uuid);
+                new TVMQueryFactory(plugin).doInsert("manipulator", set);
+                sender.sendMessage(plugin.getMessagePrefix() + "Vortex Manipulator activated!");
+            } else {
+                sender.sendMessage(plugin.getMessagePrefix() + "The Vortex Manipulator is already activated!");
+            }
+            return true;
         }
         return false;
     }

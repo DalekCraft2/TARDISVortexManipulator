@@ -23,11 +23,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-public class TVMCommandHelp implements CommandExecutor {
+public class TVMHelpCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
 
-    public TVMCommandHelp(TARDISVortexManipulatorPlugin plugin) {
+    public TVMHelpCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
     }
 

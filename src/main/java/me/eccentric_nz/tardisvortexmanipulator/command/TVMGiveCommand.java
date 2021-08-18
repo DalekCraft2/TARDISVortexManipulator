@@ -29,12 +29,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class TVMCommandGive implements CommandExecutor {
+public class TVMGiveCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
     private final int full;
 
-    public TVMCommandGive(TARDISVortexManipulatorPlugin plugin) {
+    public TVMGiveCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
         full = this.plugin.getConfig().getInt("tachyon_use.max");
     }

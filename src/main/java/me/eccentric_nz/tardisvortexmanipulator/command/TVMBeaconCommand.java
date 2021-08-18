@@ -36,11 +36,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class TVMCommandBeacon implements CommandExecutor {
+public class TVMBeaconCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
 
-    public TVMCommandBeacon(TARDISVortexManipulatorPlugin plugin) {
+    public TVMBeaconCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
     }
 

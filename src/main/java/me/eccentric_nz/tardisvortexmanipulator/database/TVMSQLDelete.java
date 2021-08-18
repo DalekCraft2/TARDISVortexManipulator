@@ -38,7 +38,7 @@ public class TVMSQLDelete implements Runnable {
 
     /**
      * Deletes rows from an SQLite database table. This method builds an SQL query string from the parameters supplied
-     * and then executes the delete.
+     * and then executes the deletion.
      *
      * @param plugin an instance of the main plugin class
      * @param table  the database table name to insert the data into.

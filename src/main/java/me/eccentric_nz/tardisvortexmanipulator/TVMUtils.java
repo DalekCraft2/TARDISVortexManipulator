@@ -160,10 +160,10 @@ public class TVMUtils {
     }
 
     /**
-     * Convert ticks to human readable time.
+     * Convert ticks to human-readable time.
      *
      * @param time the time in ticks to convert
-     * @return the human readable time
+     * @return the human-readable time
      */
     public static String convertTicksToTime(int time) {
         // convert to seconds

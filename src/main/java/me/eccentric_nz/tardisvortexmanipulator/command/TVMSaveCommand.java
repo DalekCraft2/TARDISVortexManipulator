@@ -32,11 +32,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-public class TVMCommandSave implements CommandExecutor {
+public class TVMSaveCommand implements CommandExecutor {
 
     private final TARDISVortexManipulatorPlugin plugin;
 
-    public TVMCommandSave(TARDISVortexManipulatorPlugin plugin) {
+    public TVMSaveCommand(TARDISVortexManipulatorPlugin plugin) {
         this.plugin = plugin;
     }
 

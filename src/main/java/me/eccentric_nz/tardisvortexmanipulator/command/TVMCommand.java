@@ -184,7 +184,7 @@ public class TVMCommand implements CommandExecutor {
                         // check block has space for player
                         if (!location.getBlock().getType().equals(Material.AIR)) {
                             player.sendMessage(plugin.getMessagePrefix() + "Destination block is not AIR! Adjusting...");
-                            // get highest block at these coords
+                            // get the highest block at these coords
                             int highest = location.getWorld().getHighestBlockYAt(location);
                             location.setY(highest);
                         }

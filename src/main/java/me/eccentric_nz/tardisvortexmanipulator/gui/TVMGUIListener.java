@@ -103,10 +103,8 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                         which = 0;
                         resetTrackers();
                     }
-                    case 12 -> {
-                        // one
-                        updateDisplay(view, '1');
-                    }
+                    case 12 -> // one
+                            updateDisplay(view, '1');
                     case 13 -> {
                         // two
                         if (letters.contains(which)) {
@@ -182,11 +180,9 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                             updateDisplay(view, '6');
                         }
                     }
-                    case 25 -> {
-                        // load
-                        // open saves GUI
-                        loadSaves(player);
-                    }
+                    case 25 -> // load
+                            // open saves GUI
+                            loadSaves(player);
                     case 29 -> {
                         // y
                         which = 2;
@@ -228,10 +224,8 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                             updateDisplay(view, '9');
                         }
                     }
-                    case 34 -> {
-                        // message
-                        message(player);
-                    }
+                    case 34 -> // message
+                            message(player);
                     case 38 -> {
                         // z
                         which = 3;
@@ -245,10 +239,8 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                             ts = 0;
                         }
                     }
-                    case 40 -> {
-                        //zero
-                        updateDisplay(view, '0');
-                    }
+                    case 40 -> //zero
+                            updateDisplay(view, '0');
                     case 41 -> {
                         // hash
                         if (letters.contains(which) || components.get(0).startsWith("~")) {
@@ -261,10 +253,8 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                             updateDisplay(view, '-');
                         }
                     }
-                    case 43 -> {
-                        // beacon
-                        setBeacon(player);
-                    }
+                    case 43 -> // beacon
+                            setBeacon(player);
                     case 45 -> {
                         // close
                         close(player);
@@ -631,7 +621,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 // check block has space for player
                 if (!l.getBlock().getType().equals(Material.AIR)) {
                     p.sendMessage(plugin.getMessagePrefix() + "Destination block is not AIR! Adjusting...");
-                    // get highest block at these coords
+                    // get the highest block at these coords
                     int highest = l.getWorld().getHighestBlockYAt(l);
                     l.setY(highest);
                 }
