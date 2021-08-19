@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * TabCompleter for /vmm
  */
-public class TVMTabCompleteMessage extends TARDISCompleter implements TabCompleter {
+public class TVMMessageTabCompleter extends TARDISCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("msg", "list", "read", "delete", "clear");
     private final ImmutableList<String> IN_OUT_SUBS = ImmutableList.of("in", "out");

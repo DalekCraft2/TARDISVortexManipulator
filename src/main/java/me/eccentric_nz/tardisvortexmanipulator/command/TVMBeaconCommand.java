@@ -34,7 +34,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 public class TVMBeaconCommand implements CommandExecutor {
 
@@ -45,74 +48,71 @@ public class TVMBeaconCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmbeacon")) {
-            Player player = null;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
-                return true;
-            }
-            if (!player.hasPermission("vm.beacon")) {
-                player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
-                return true;
-            }
-            ItemStack itemStack = player.getInventory().getItemInMainHand();
-            if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING) && itemStack.getItemMeta().getPersistentDataContainer().get(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING).equals("vortex_manipulator")) {
-                int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
-                if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
-                    player.sendMessage(plugin.getMessagePrefix() + "You don't have enough tachyons to set a beacon signal!");
-                    return true;
-                }
-                UUID uuid = player.getUniqueId();
-                String uuidString = uuid.toString();
-                Location location = player.getLocation();
-                // potential griefing, we need to check the location first!
-                List<Flag> flags = new ArrayList<>();
-                if (plugin.getConfig().getBoolean("respect.factions")) {
-                    flags.add(Flag.RESPECT_FACTIONS);
-                }
-                if (plugin.getConfig().getBoolean("respect.griefprevention")) {
-                    flags.add(Flag.RESPECT_GRIEFPREVENTION);
-                }
-                if (plugin.getConfig().getBoolean("respect.towny")) {
-                    flags.add(Flag.RESPECT_TOWNY);
-                }
-                if (plugin.getConfig().getBoolean("respect.worldborder")) {
-                    flags.add(Flag.RESPECT_WORLDBORDER);
-                }
-                if (plugin.getConfig().getBoolean("respect.worldguard")) {
-                    flags.add(Flag.RESPECT_WORLDGUARD);
-                }
-                Parameters params = new Parameters(player, flags);
-                if (!plugin.getTardisApi().getRespect().getRespect(location, params)) {
-                    player.sendMessage(plugin.getMessagePrefix() + "You are not permitted to set a beacon signal here!");
-                    return true;
-                }
-                Block block = location.getBlock().getRelative(BlockFace.DOWN);
-                TVMQueryFactory queryFactory = new TVMQueryFactory(plugin);
-                queryFactory.saveBeaconBlock(uuidString, block);
-                block.setBlockData(Material.BEACON.createBlockData());
-                Block down = block.getRelative(BlockFace.DOWN);
-                queryFactory.saveBeaconBlock(uuidString, down);
-                BlockData iron = Material.IRON_BLOCK.createBlockData();
-                down.setBlockData(iron);
-                List<BlockFace> blockFaces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST);
-                blockFaces.forEach((blockFace) -> {
-                    queryFactory.saveBeaconBlock(uuidString, down.getRelative(blockFace));
-                    down.getRelative(blockFace).setBlockData(iron);
-                });
-                plugin.getBeaconSetters().add(uuid);
-                // remove tachyons
-                queryFactory.alterTachyons(uuidString, -required);
-                player.sendMessage(plugin.getMessagePrefix() + "Beacon signal set, don't move!");
-            } else {
-                player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
-            }
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        Player player = null;
+        if (sender instanceof Player) {
+            player = (Player) sender;
+        }
+        if (player == null) {
+            sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
             return true;
         }
-        return false;
+        if (!player.hasPermission("vm.beacon")) {
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
+            return true;
+        }
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING) && itemStack.getItemMeta().getPersistentDataContainer().get(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING).equals("vortex_manipulator")) {
+            int required = plugin.getConfig().getInt("tachyon_use.lifesigns");
+            if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
+                player.sendMessage(plugin.getMessagePrefix() + "You don't have enough tachyons to set a beacon signal!");
+                return true;
+            }
+            UUID uuid = player.getUniqueId();
+            String uuidString = uuid.toString();
+            Location location = player.getLocation();
+            // potential griefing, we need to check the location first!
+            List<Flag> flags = new ArrayList<>();
+            if (plugin.getConfig().getBoolean("respect.factions")) {
+                flags.add(Flag.RESPECT_FACTIONS);
+            }
+            if (plugin.getConfig().getBoolean("respect.griefprevention")) {
+                flags.add(Flag.RESPECT_GRIEFPREVENTION);
+            }
+            if (plugin.getConfig().getBoolean("respect.towny")) {
+                flags.add(Flag.RESPECT_TOWNY);
+            }
+            if (plugin.getConfig().getBoolean("respect.worldborder")) {
+                flags.add(Flag.RESPECT_WORLDBORDER);
+            }
+            if (plugin.getConfig().getBoolean("respect.worldguard")) {
+                flags.add(Flag.RESPECT_WORLDGUARD);
+            }
+            Parameters params = new Parameters(player, flags);
+            if (!plugin.getTardisApi().getRespect().getRespect(location, params)) {
+                player.sendMessage(plugin.getMessagePrefix() + "You are not permitted to set a beacon signal here!");
+                return true;
+            }
+            Block block = location.getBlock().getRelative(BlockFace.DOWN);
+            TVMQueryFactory queryFactory = new TVMQueryFactory(plugin);
+            queryFactory.saveBeaconBlock(uuidString, block);
+            block.setBlockData(Material.BEACON.createBlockData());
+            Block down = block.getRelative(BlockFace.DOWN);
+            queryFactory.saveBeaconBlock(uuidString, down);
+            BlockData iron = Material.IRON_BLOCK.createBlockData();
+            down.setBlockData(iron);
+            List<BlockFace> blockFaces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST);
+            blockFaces.forEach((blockFace) -> {
+                queryFactory.saveBeaconBlock(uuidString, down.getRelative(blockFace));
+                down.getRelative(blockFace).setBlockData(iron);
+            });
+            plugin.getBeaconSetters().add(uuid);
+            // remove tachyons
+            queryFactory.alterTachyons(uuidString, -required);
+            player.sendMessage(plugin.getMessagePrefix() + "Beacon signal set, don't move!");
+        } else {
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
+        }
+        return true;
     }
 }

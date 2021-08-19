@@ -40,56 +40,53 @@ public class TVMGiveCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmgive")) {
-            if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
-                return true;
-            }
-            if (args.length < 2) {
-                sender.sendMessage(plugin.getMessagePrefix() + "You need to specify a player and amount!");
-                return true;
-            }
-            Player player = plugin.getServer().getPlayer(args[0]);
-            if (player == null || !player.isOnline()) { // player must be online
-                TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
-                return true;
-            }
-            // Look up this player's UUID
-            UUID uuid = player.getUniqueId();
-            // check for existing record
-            TVMResultSetManipulator resultSetManipulator = new TVMResultSetManipulator(plugin, uuid.toString());
-            if (resultSetManipulator.resultSet()) {
-                int tachyonLevel = resultSetManipulator.getTachyonLevel();
-                int amount;
-                if (args[1].equalsIgnoreCase("full")) {
-                    amount = full;
-                } else if (args[1].equalsIgnoreCase("empty")) {
-                    amount = 0;
-                } else {
-                    try {
-                        amount = Integer.parseInt(args[1]);
-                    } catch (NumberFormatException e) {
-                        sender.sendMessage(plugin.getMessagePrefix() + "The last argument must be a number, 'full', or 'empty'");
-                        return true;
-                    }
-                    if (tachyonLevel + amount > full) {
-                        amount = full;
-                    } else {
-                        amount += tachyonLevel;
-                    }
-                }
-                HashMap<String, Object> set = new HashMap<>();
-                set.put("tachyon_level", amount);
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", uuid.toString());
-                new TVMQueryFactory(plugin).doUpdate("manipulator", set, where);
-                sender.sendMessage(plugin.getMessagePrefix() + "Tachyon level set to " + amount);
-            } else {
-                sender.sendMessage(plugin.getMessagePrefix() + "Player does not have a Vortex Manipulator!");
-            }
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (!sender.hasPermission("tardis.admin")) {
+            sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
             return true;
         }
-        return false;
+        if (args.length < 2) {
+            sender.sendMessage(plugin.getMessagePrefix() + "You need to specify a player and amount!");
+            return true;
+        }
+        Player player = plugin.getServer().getPlayer(args[0]);
+        if (player == null || !player.isOnline()) { // player must be online
+            TARDISMessage.send(sender, "COULD_NOT_FIND_NAME");
+            return true;
+        }
+        // Look up this player's UUID
+        UUID uuid = player.getUniqueId();
+        // check for existing record
+        TVMResultSetManipulator resultSetManipulator = new TVMResultSetManipulator(plugin, uuid.toString());
+        if (resultSetManipulator.resultSet()) {
+            int tachyonLevel = resultSetManipulator.getTachyonLevel();
+            int amount;
+            if (args[1].equalsIgnoreCase("full")) {
+                amount = full;
+            } else if (args[1].equalsIgnoreCase("empty")) {
+                amount = 0;
+            } else {
+                try {
+                    amount = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(plugin.getMessagePrefix() + "The last argument must be a number, 'full', or 'empty'");
+                    return true;
+                }
+                if (tachyonLevel + amount > full) {
+                    amount = full;
+                } else {
+                    amount += tachyonLevel;
+                }
+            }
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("tachyon_level", amount);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid.toString());
+            new TVMQueryFactory(plugin).doUpdate("manipulator", set, where);
+            sender.sendMessage(plugin.getMessagePrefix() + "Tachyon level set to " + amount);
+        } else {
+            sender.sendMessage(plugin.getMessagePrefix() + "Player does not have a Vortex Manipulator!");
+        }
+        return true;
     }
 }

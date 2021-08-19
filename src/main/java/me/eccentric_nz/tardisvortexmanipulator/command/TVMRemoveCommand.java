@@ -38,44 +38,41 @@ public class TVMRemoveCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmremove")) {
-            Player player = null;
-            if (sender instanceof Player) {
-                player = (Player) sender;
-            }
-            if (player == null) {
-                sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
-                return true;
-            }
-            if (!player.hasPermission("vm.teleport")) {
-                player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
-                return true;
-            }
-            ItemStack itemStack = player.getInventory().getItemInMainHand();
-            if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING) && itemStack.getItemMeta().getPersistentDataContainer().get(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING).equals("vortex_manipulator")) {
-                if (args.length < 1) {
-                    player.sendMessage(plugin.getMessagePrefix() + "You need to specify a save name!");
-                    return true;
-                }
-                String uuid = player.getUniqueId().toString();
-                // check for existing save
-                TVMResultSetWarpByName resultSetWarp = new TVMResultSetWarpByName(plugin, uuid, args[0]);
-                if (resultSetWarp.resultSet()) {
-                    player.sendMessage(plugin.getMessagePrefix() + "No save with that name exists! Try using /vms to list saves.");
-                    return true;
-                }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", uuid);
-                where.put("save_name", args[0]);
-                new TVMQueryFactory(plugin).doDelete("saves", where);
-                sender.sendMessage(plugin.getMessagePrefix() + "Vortex Manipulator location (" + args[0] + ") removed!");
-                return true;
-            } else {
-                player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
-                return true;
-            }
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        Player player = null;
+        if (sender instanceof Player) {
+            player = (Player) sender;
         }
-        return false;
+        if (player == null) {
+            sender.sendMessage(plugin.getMessagePrefix() + "That command cannot be used from the console!");
+            return true;
+        }
+        if (!player.hasPermission("vm.teleport")) {
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
+            return true;
+        }
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        if (itemStack.hasItemMeta() && itemStack.getItemMeta().getPersistentDataContainer().has(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING) && itemStack.getItemMeta().getPersistentDataContainer().get(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING).equals("vortex_manipulator")) {
+            if (args.length < 1) {
+                player.sendMessage(plugin.getMessagePrefix() + "You need to specify a save name!");
+                return true;
+            }
+            String uuid = player.getUniqueId().toString();
+            // check for existing save
+            TVMResultSetWarpByName resultSetWarp = new TVMResultSetWarpByName(plugin, uuid, args[0]);
+            if (resultSetWarp.resultSet()) {
+                player.sendMessage(plugin.getMessagePrefix() + "No save with that name exists! Try using /vms to list saves.");
+                return true;
+            }
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            where.put("save_name", args[0]);
+            new TVMQueryFactory(plugin).doDelete("saves", where);
+            sender.sendMessage(plugin.getMessagePrefix() + "Vortex Manipulator location (" + args[0] + ") removed!");
+            return true;
+        } else {
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
+            return true;
+        }
     }
 }

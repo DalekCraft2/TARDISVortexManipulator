@@ -34,23 +34,20 @@ public class TVMConvertCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("vmdatabase")) {
-            if (!sender.hasPermission("tardis.admin")) {
-                sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
-                return true;
-            }
-            if (args.length < 1 || !args[0].equalsIgnoreCase("convert_database")) {
-                return false;
-            }
-            try {
-                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
-                return true;
-            } catch (Exception e) {
-                sender.sendMessage("Database conversion failed! " + e.getMessage());
-                return true;
-            }
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (!sender.hasPermission("tardis.admin")) {
+            sender.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use that command!");
+            return true;
         }
-        return false;
+        if (args.length < 1 || !args[0].equalsIgnoreCase("convert_database")) {
+            return false;
+        }
+        try {
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
+            return true;
+        } catch (Exception e) {
+            sender.sendMessage("Database conversion failed! " + e.getMessage());
+            return true;
+        }
     }
 }

@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * TabCompleter for /vmh
  */
-public class TVMTabCompleteHelp implements TabCompleter {
+public class TVMHelpTabCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("command", "gui", "message", "tachyon");
 

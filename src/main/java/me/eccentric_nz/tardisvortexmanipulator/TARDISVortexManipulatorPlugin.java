@@ -151,10 +151,10 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
         getCommand("vmactivate").setExecutor(new TVMActivateCommand(this));
         getCommand("vmbeacon").setExecutor(new TVMBeaconCommand(this));
         getCommand("vmhelp").setExecutor(new TVMHelpCommand(this));
-        getCommand("vmhelp").setTabCompleter(new TVMTabCompleteHelp());
+        getCommand("vmhelp").setTabCompleter(new TVMHelpTabCompleter());
         getCommand("vmlifesigns").setExecutor(new TVMLifesignsCommand(this));
         getCommand("vmmessage").setExecutor(new TVMMessageCommand(this));
-        getCommand("vmmessage").setTabCompleter(new TVMTabCompleteMessage());
+        getCommand("vmmessage").setTabCompleter(new TVMMessageTabCompleter());
         getCommand("vmremove").setExecutor(new TVMRemoveCommand(this));
         getCommand("vmsave").setExecutor(new TVMSaveCommand(this));
         getCommand("vmgive").setExecutor(new TVMGiveCommand(this));
