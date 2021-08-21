@@ -313,7 +313,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             default -> combined = comp;
         }
         components.set(which, comp);
-        List<String> dlore = Arrays.asList(ChatColor.GRAY + combined);
+        List<String> dlore = List.of(ChatColor.GRAY + combined);
         displayMeta.setLore(dlore);
         display.setItemMeta(displayMeta);
     }
