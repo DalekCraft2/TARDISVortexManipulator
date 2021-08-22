@@ -56,11 +56,6 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
     private String prefix;
 
     @Override
-    public void onDisable() {
-        // Place any custom disable code here.
-    }
-
-    @Override
     public void onEnable() {
         plugin = this;
         itemKey = new NamespacedKey(this, "item");
