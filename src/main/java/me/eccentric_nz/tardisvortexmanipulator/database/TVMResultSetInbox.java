@@ -94,8 +94,8 @@ public class TVMResultSetInbox {
 
     private String getFormattedDate(long milliseconds) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(plugin.getConfig().getString("date_format"));
-        Date theDate = new Date(milliseconds);
-        return simpleDateFormat.format(theDate);
+        Date date = new Date(milliseconds);
+        return simpleDateFormat.format(date);
     }
 
     public List<TVMMessage> getMail() {

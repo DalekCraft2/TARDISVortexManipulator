@@ -53,28 +53,28 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
     List<String> titles = Arrays.asList("§4Vortex Manipulator", "§4VM Messages", "§4VM Saves");
     List<String> components = Arrays.asList("", "", "", "", "", "");
     List<Integer> letters = Arrays.asList(0, 4, 5);
-    char[] two = new char[]{'2', 'a', 'b', 'c'};
-    char[] three = new char[]{'3', 'd', 'e', 'f'};
-    char[] four = new char[]{'4', 'g', 'h', 'i'};
-    char[] five = new char[]{'5', 'j', 'k', 'l'};
-    char[] six = new char[]{'6', 'm', 'n', 'o'};
-    char[] seven = new char[]{'7', 'p', 'q', 'r', 's'};
-    char[] eight = new char[]{'8', 't', 'u', 'v'};
-    char[] nine = new char[]{'9', 'w', 'x', 'y', 'z'};
-    char[] star = new char[]{'*', ' '};
-    char[] hash = new char[]{'#', '~', '_', '-'};
+    char[] twoChars = new char[]{'2', 'a', 'b', 'c'};
+    char[] threeChars = new char[]{'3', 'd', 'e', 'f'};
+    char[] fourChars = new char[]{'4', 'g', 'h', 'i'};
+    char[] fiveChars = new char[]{'5', 'j', 'k', 'l'};
+    char[] sixChars = new char[]{'6', 'm', 'n', 'o'};
+    char[] sevenChars = new char[]{'7', 'p', 'q', 'r', 's'};
+    char[] eightChars = new char[]{'8', 't', 'u', 'v'};
+    char[] nineChars = new char[]{'9', 'w', 'x', 'y', 'z'};
+    char[] starChars = new char[]{'*', ' '};
+    char[] hashChars = new char[]{'#', '~', '_', '-'};
     int which = 0;
     int[] pos;
-    int t2 = 0;
-    int t3 = 0;
-    int t4 = 0;
-    int t5 = 0;
-    int t6 = 0;
-    int t7 = 0;
-    int t8 = 0;
-    int t9 = 0;
-    int ts = 0;
-    int th = 0;
+    int twoTracker = 0;
+    int threeTracker = 0;
+    int fourTracker = 0;
+    int fiveTracker = 0;
+    int sixTracker = 0;
+    int sevenTracker = 0;
+    int eightTracker = 0;
+    int nineTracker = 0;
+    int starTracker = 0;
+    int hashTracker = 0;
     TVMQueryFactory queryFactory;
 
     public TVMGUIListener(TARDISVortexManipulatorPlugin plugin) {
@@ -108,10 +108,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 13 -> {
                         // two
                         if (letters.contains(which)) {
-                            updateDisplay(view, two[t2]);
-                            t2++;
-                            if (t2 == two.length) {
-                                t2 = 0;
+                            updateDisplay(view, twoChars[twoTracker]);
+                            twoTracker++;
+                            if (twoTracker == twoChars.length) {
+                                twoTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '2');
@@ -120,10 +120,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 14 -> {
                         // three
                         if (letters.contains(which)) {
-                            updateDisplay(view, three[t3]);
-                            t3++;
-                            if (t3 == three.length) {
-                                t3 = 0;
+                            updateDisplay(view, threeChars[threeTracker]);
+                            threeTracker++;
+                            if (threeTracker == threeChars.length) {
+                                threeTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '3');
@@ -147,10 +147,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 21 -> {
                         // four
                         if (letters.contains(which)) {
-                            updateDisplay(view, four[t4]);
-                            t4++;
-                            if (t4 == four.length) {
-                                t4 = 0;
+                            updateDisplay(view, fourChars[fourTracker]);
+                            fourTracker++;
+                            if (fourTracker == fourChars.length) {
+                                fourTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '4');
@@ -159,10 +159,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 22 -> {
                         // five
                         if (letters.contains(which)) {
-                            updateDisplay(view, five[t5]);
-                            t5++;
-                            if (t5 == five.length) {
-                                t5 = 0;
+                            updateDisplay(view, fiveChars[fiveTracker]);
+                            fiveTracker++;
+                            if (fiveTracker == fiveChars.length) {
+                                fiveTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '5');
@@ -171,10 +171,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 23 -> {
                         // six
                         if (letters.contains(which)) {
-                            updateDisplay(view, six[t6]);
-                            t6++;
-                            if (t6 == six.length) {
-                                t6 = 0;
+                            updateDisplay(view, sixChars[sixTracker]);
+                            sixTracker++;
+                            if (sixTracker == sixChars.length) {
+                                sixTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '6');
@@ -191,10 +191,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 30 -> {
                         // seven
                         if (letters.contains(which)) {
-                            updateDisplay(view, seven[t7]);
-                            t7++;
-                            if (t7 == seven.length) {
-                                t7 = 0;
+                            updateDisplay(view, sevenChars[sevenTracker]);
+                            sevenTracker++;
+                            if (sevenTracker == sevenChars.length) {
+                                sevenTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '7');
@@ -203,10 +203,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 31 -> {
                         // eight
                         if (letters.contains(which)) {
-                            updateDisplay(view, eight[t8]);
-                            t8++;
-                            if (t8 == eight.length) {
-                                t8 = 0;
+                            updateDisplay(view, eightChars[eightTracker]);
+                            eightTracker++;
+                            if (eightTracker == eightChars.length) {
+                                eightTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '8');
@@ -215,10 +215,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 32 -> {
                         // nine
                         if (letters.contains(which)) {
-                            updateDisplay(view, nine[t9]);
-                            t9++;
-                            if (t9 == nine.length) {
-                                t9 = 0;
+                            updateDisplay(view, nineChars[nineTracker]);
+                            nineTracker++;
+                            if (nineTracker == nineChars.length) {
+                                nineTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '9');
@@ -233,10 +233,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     }
                     case 39 -> {
                         // star
-                        updateDisplay(view, star[ts]);
-                        ts++;
-                        if (ts == star.length) {
-                            ts = 0;
+                        updateDisplay(view, starChars[starTracker]);
+                        starTracker++;
+                        if (starTracker == starChars.length) {
+                            starTracker = 0;
                         }
                     }
                     case 40 -> //zero
@@ -244,10 +244,10 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                     case 41 -> {
                         // hash
                         if (letters.contains(which) || components.get(0).startsWith("~")) {
-                            updateDisplay(view, hash[th]);
-                            th++;
-                            if (th == hash.length) {
-                                th = 0;
+                            updateDisplay(view, hashChars[hashTracker]);
+                            hashTracker++;
+                            if (hashTracker == hashChars.length) {
+                                hashTracker = 0;
                             }
                         } else {
                             updateDisplay(view, '-');
@@ -289,7 +289,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         }
     }
 
-    private void updateDisplay(InventoryView view, char s) {
+    private void updateDisplay(InventoryView view, char c) {
         ItemStack display = view.getItem(4);
         ItemMeta displayMeta = display.getItemMeta();
         char[] chars = (components.get(which).isEmpty()) ? new char[1] : components.get(which).toCharArray();
@@ -302,7 +302,7 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 i++;
             }
         }
-        chars[pos[which]] = s;
+        chars[pos[which]] = c;
         String comp = new String(chars);
         String combined;
         switch (which) {
@@ -313,22 +313,22 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             default -> combined = comp;
         }
         components.set(which, comp);
-        List<String> dlore = List.of(ChatColor.GRAY + combined);
-        displayMeta.setLore(dlore);
+        List<String> displayLore = List.of(ChatColor.GRAY + combined);
+        displayMeta.setLore(displayLore);
         display.setItemMeta(displayMeta);
     }
 
     private void resetTrackers() {
-        t2 = 0;
-        t3 = 0;
-        t4 = 0;
-        t5 = 0;
-        t6 = 0;
-        t7 = 0;
-        t8 = 0;
-        t9 = 0;
-        ts = 0;
-        th = 0;
+        twoTracker = 0;
+        threeTracker = 0;
+        fourTracker = 0;
+        fiveTracker = 0;
+        sixTracker = 0;
+        sevenTracker = 0;
+        eightTracker = 0;
+        nineTracker = 0;
+        starTracker = 0;
+        hashTracker = 0;
     }
 
     private void saveCurrentLocation(Player player, InventoryView view) {
@@ -376,8 +376,8 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         if (playerName.isEmpty()) {
             player.sendMessage(plugin.getMessagePrefix() + "Nearby entities:");
             // scan nearby entities
-            double d = plugin.getConfig().getDouble("lifesign_scan_distance");
-            List<Entity> nearbyEntities = player.getNearbyEntities(d, d, d);
+            double scanDistance = plugin.getConfig().getDouble("lifesign_scan_distance");
+            List<Entity> nearbyEntities = player.getNearbyEntities(scanDistance, scanDistance, scanDistance);
             if (nearbyEntities.size() > 0) {
                 // record nearby entities
                 HashMap<EntityType, Integer> scannedEntities = new HashMap<>();
@@ -436,44 +436,44 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         }
     }
 
-    private void loadSaves(Player p) {
-        close(p);
+    private void loadSaves(Player player) {
+        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMSavesGUI tvms = new TVMSavesGUI(plugin, 0, 44, p.getUniqueId().toString());
-            ItemStack[] gui = tvms.getGui();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Saves");
-            vmg.setContents(gui);
-            p.openInventory(vmg);
+            TVMSavesGUI savesGui = new TVMSavesGUI(plugin, 0, 44, player.getUniqueId().toString());
+            ItemStack[] savesGuiItems = savesGui.getItems();
+            Inventory savesInventory = plugin.getServer().createInventory(player, 54, "§4VM Saves");
+            savesInventory.setContents(savesGuiItems);
+            player.openInventory(savesInventory);
         }, 2L);
     }
 
-    private void message(Player p) {
-        close(p);
-        if (!p.hasPermission("vm.message")) {
-            p.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use Vortex messages!");
+    private void message(Player player) {
+        close(player);
+        if (!player.hasPermission("vm.message")) {
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to use Vortex messages!");
             return;
         }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMMessageGUI tvmm = new TVMMessageGUI(plugin, 0, 44, p.getUniqueId().toString());
-            ItemStack[] gui = tvmm.getGui();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Messages");
-            vmg.setContents(gui);
-            p.openInventory(vmg);
+            TVMMessageGUI messageGui = new TVMMessageGUI(plugin, 0, 44, player.getUniqueId().toString());
+            ItemStack[] messageGuiItems = messageGui.getItems();
+            Inventory messageInventory = plugin.getServer().createInventory(player, 54, "§4VM Messages");
+            messageInventory.setContents(messageGuiItems);
+            player.openInventory(messageInventory);
         }, 2L);
     }
 
-    private void setBeacon(Player p) {
-        if (!p.hasPermission("vm.beacon")) {
-            close(p);
-            p.sendMessage(plugin.getMessagePrefix() + "You don't have permission to set a beacon signal!");
+    private void setBeacon(Player player) {
+        if (!player.hasPermission("vm.beacon")) {
+            close(player);
+            player.sendMessage(plugin.getMessagePrefix() + "You don't have permission to set a beacon signal!");
             return;
         }
-        UUID uuid = p.getUniqueId();
+        UUID uuid = player.getUniqueId();
         String message = "You don't have enough tachyons to set a beacon signal!";
         int required = plugin.getConfig().getInt("tachyon_use.beacon");
         if (TVMUtils.checkTachyonLevel(uuid.toString(), required)) {
-            String ustr = uuid.toString();
-            Location l = p.getLocation();
+            String uuidString = uuid.toString();
+            Location location = player.getLocation();
             // potential griefing, we need to check the location first!
             List<Flag> flags = new ArrayList<>();
             if (plugin.getConfig().getBoolean("respect.factions")) {
@@ -491,45 +491,45 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
             if (plugin.getConfig().getBoolean("respect.worldguard")) {
                 flags.add(Flag.RESPECT_WORLDGUARD);
             }
-            Parameters params = new Parameters(p, flags);
-            if (!plugin.getTardisApi().getRespect().getRespect(l, params)) {
-                close(p);
-                p.sendMessage(plugin.getMessagePrefix() + "You are not permitted to set a beacon signal here!");
+            Parameters parameters = new Parameters(player, flags);
+            if (!plugin.getTardisApi().getRespect().getRespect(location, parameters)) {
+                close(player);
+                player.sendMessage(plugin.getMessagePrefix() + "You are not permitted to set a beacon signal here!");
                 return;
             }
-            Block b = l.getBlock().getRelative(BlockFace.DOWN);
-            queryFactory.saveBeaconBlock(ustr, b);
-            b.setBlockData(Material.BEACON.createBlockData());
-            Block down = b.getRelative(BlockFace.DOWN);
-            queryFactory.saveBeaconBlock(ustr, down);
-            BlockData iron = Material.IRON_BLOCK.createBlockData();
-            down.setBlockData(iron);
+            Block block = location.getBlock().getRelative(BlockFace.DOWN);
+            queryFactory.saveBeaconBlock(uuidString, block);
+            block.setBlockData(Material.BEACON.createBlockData());
+            Block down = block.getRelative(BlockFace.DOWN);
+            queryFactory.saveBeaconBlock(uuidString, down);
+            BlockData ironBlock = Material.IRON_BLOCK.createBlockData();
+            down.setBlockData(ironBlock);
             List<BlockFace> faces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST);
-            faces.forEach((f) -> {
-                queryFactory.saveBeaconBlock(ustr, down.getRelative(f));
-                down.getRelative(f).setBlockData(iron);
+            faces.forEach((face) -> {
+                queryFactory.saveBeaconBlock(uuidString, down.getRelative(face));
+                down.getRelative(face).setBlockData(ironBlock);
             });
             plugin.getBeaconSetters().add(uuid);
             message = "Beacon signal set, don't move!";
             // remove tachyons
-            queryFactory.alterTachyons(p.getUniqueId().toString(), -required);
+            queryFactory.alterTachyons(player.getUniqueId().toString(), -required);
         }
-        close(p);
-        p.sendMessage(plugin.getMessagePrefix() + message);
+        close(player);
+        player.sendMessage(plugin.getMessagePrefix() + message);
     }
 
-    private void doWarp(Player p, InventoryView view) {
+    private void doWarp(Player player, InventoryView view) {
         ItemStack display = view.getItem(4);
-        ItemMeta dim = display.getItemMeta();
-        List<String> lore = dim.getLore();
-        List<String> dest;
-        if (!lore.get(0).trim().isEmpty()) {
-            dest = Arrays.asList(lore.get(0).trim().split(" "));
+        ItemMeta displayMeta = display.getItemMeta();
+        List<String> displayLore = displayMeta.getLore();
+        List<String> destination;
+        if (!displayLore.get(0).trim().isEmpty()) {
+            destination = Arrays.asList(displayLore.get(0).trim().split(" "));
         } else {
-            dest = new ArrayList<>();
+            destination = new ArrayList<>();
         }
         List<String> worlds = new ArrayList<>();
-        Location l;
+        Location location;
         // set parameters
         List<Flag> flags = new ArrayList<>();
         flags.add(Flag.PERMS_AREA);
@@ -551,45 +551,45 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
         if (plugin.getConfig().getBoolean("respect.worldguard")) {
             flags.add(Flag.RESPECT_WORLDGUARD);
         }
-        Parameters params = new Parameters(p, flags);
+        Parameters parameters = new Parameters(player, flags);
         int required;
-        switch (dest.size()) {
+        switch (destination.size()) {
             case 1, 2, 3 -> {
                 required = plugin.getConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 // check world is an actual world
-                if (plugin.getServer().getWorld(dest.get(0)) == null) {
-                    close(p);
-                    p.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
+                if (plugin.getServer().getWorld(destination.get(0)) == null) {
+                    close(player);
+                    player.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
                     return;
                 }
                 // check world is enabled for travel
-                if (!plugin.getTardisApi().getWorlds().contains(dest.get(0))) {
-                    close(p);
-                    p.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
+                if (!plugin.getTardisApi().getWorlds().contains(destination.get(0))) {
+                    close(player);
+                    player.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
                     return;
                 }
-                worlds.add(dest.get(0));
-                l = plugin.getTardisApi().getRandomLocation(worlds, null, params);
+                worlds.add(destination.get(0));
+                location = plugin.getTardisApi().getRandomLocation(worlds, null, parameters);
             }
             case 4 -> {
                 required = plugin.getConfig().getInt("tachyon_use.travel.coords");
                 // world, x, y, z specified
-                World w;
-                if (dest.get(0).contains("~")) {
+                World world;
+                if (destination.get(0).contains("~")) {
                     // relative location
-                    w = p.getLocation().getWorld();
+                    world = player.getLocation().getWorld();
                 } else {
-                    w = plugin.getServer().getWorld(dest.get(0));
-                    if (w == null) {
-                        close(p);
-                        p.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
+                    world = plugin.getServer().getWorld(destination.get(0));
+                    if (world == null) {
+                        close(player);
+                        player.sendMessage(plugin.getMessagePrefix() + "World does not exist!");
                         return;
                     }
                     // check world is enabled for travel
-                    if (!plugin.getTardisApi().getWorlds().contains(dest.get(0))) {
-                        close(p);
-                        p.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
+                    if (!plugin.getTardisApi().getWorlds().contains(destination.get(0))) {
+                        close(player);
+                        player.sendMessage(plugin.getMessagePrefix() + "You cannot travel to this world using the Vortex Manipulator!");
                         return;
                     }
                 }
@@ -597,72 +597,72 @@ public class TVMGUIListener extends TVMGUICommon implements Listener {
                 double y;
                 double z;
                 try {
-                    if (dest.get(1).startsWith("~")) {
+                    if (destination.get(1).startsWith("~")) {
                         // get players current location
-                        Location tl = p.getLocation();
-                        double tx = tl.getX();
-                        double ty = tl.getY();
-                        double tz = tl.getZ();
+                        Location playerLocation = player.getLocation();
+                        double playerX = playerLocation.getX();
+                        double playerY = playerLocation.getY();
+                        double playerZ = playerLocation.getZ();
                         // strip off the initial "~" and add to current position
-                        x = tx + Double.parseDouble(dest.get(1).substring(1));
-                        y = ty + Double.parseDouble(dest.get(2).substring(1));
-                        z = tz + Double.parseDouble(dest.get(3).substring(1));
+                        x = playerX + Double.parseDouble(destination.get(1).substring(1));
+                        y = playerY + Double.parseDouble(destination.get(2).substring(1));
+                        z = playerZ + Double.parseDouble(destination.get(3).substring(1));
                     } else {
-                        x = Double.parseDouble(dest.get(1));
-                        y = Double.parseDouble(dest.get(2));
-                        z = Double.parseDouble(dest.get(3));
+                        x = Double.parseDouble(destination.get(1));
+                        y = Double.parseDouble(destination.get(2));
+                        z = Double.parseDouble(destination.get(3));
                     }
                 } catch (NumberFormatException e) {
-                    close(p);
-                    p.sendMessage(plugin.getMessagePrefix() + "Could not parse coordinates!");
+                    close(player);
+                    player.sendMessage(plugin.getMessagePrefix() + "Could not parse coordinates!");
                     return;
                 }
-                l = new Location(w, x, y, z);
+                location = new Location(world, x, y, z);
                 // check block has space for player
-                if (!l.getBlock().getType().equals(Material.AIR)) {
-                    p.sendMessage(plugin.getMessagePrefix() + "Destination block is not AIR! Adjusting...");
+                if (!location.getBlock().getType().equals(Material.AIR)) {
+                    player.sendMessage(plugin.getMessagePrefix() + "Destination block is not AIR! Adjusting...");
                     // get the highest block at these coords
-                    int highest = l.getWorld().getHighestBlockYAt(l);
-                    l.setY(highest);
+                    int highest = location.getWorld().getHighestBlockYAt(location);
+                    location.setY(highest);
                 }
             }
             default -> {
                 required = plugin.getConfig().getInt("tachyon_use.travel.random");
                 // random
-                l = plugin.getTardisApi().getRandomLocation(plugin.getTardisApi().getWorlds(), null, params);
+                location = plugin.getTardisApi().getRandomLocation(plugin.getTardisApi().getWorlds(), null, parameters);
             }
         }
-        UUID uuid = p.getUniqueId();
+        UUID uuid = player.getUniqueId();
         if (!TVMUtils.checkTachyonLevel(uuid.toString(), required)) {
-            close(p);
-            p.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
+            close(player);
+            player.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
             return;
         }
-        if (l != null) {
-            close(p);
+        if (location != null) {
+            close(player);
             List<Player> players = new ArrayList<>();
-            players.add(p);
+            players.add(player);
             if (plugin.getConfig().getBoolean("allow.multiple")) {
-                p.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
-                    if (e instanceof Player && !e.getUniqueId().equals(uuid)) {
-                        players.add((Player) e);
+                player.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((entity) -> {
+                    if (entity instanceof Player && !entity.getUniqueId().equals(uuid)) {
+                        players.add((Player) entity);
                     }
                 });
             }
             int actual = required * players.size();
             if (!TVMUtils.checkTachyonLevel(uuid.toString(), actual)) {
-                p.sendMessage(plugin.getMessagePrefix() + "You need at least " + actual + " tachyons to travel!");
+                player.sendMessage(plugin.getMessagePrefix() + "You need at least " + actual + " tachyons to travel!");
                 return;
             }
-            p.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
-            while (!l.getChunk().isLoaded()) {
-                l.getChunk().load();
+            player.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
+            while (!location.getChunk().isLoaded()) {
+                location.getChunk().load();
             }
-            TVMUtils.movePlayers(players, l, p.getLocation().getWorld());
+            TVMUtils.movePlayers(players, location, player.getLocation().getWorld());
             // remove tachyons
             queryFactory.alterTachyons(uuid.toString(), -actual);
         } else {
-            p.sendMessage(plugin.getMessagePrefix() + "No location could be found within those parameters.");
+            player.sendMessage(plugin.getMessagePrefix() + "No location could be found within those parameters.");
         }
     }
 

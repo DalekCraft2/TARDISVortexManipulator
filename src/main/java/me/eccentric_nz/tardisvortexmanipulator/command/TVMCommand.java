@@ -73,10 +73,10 @@ public class TVMCommand implements CommandExecutor {
                 TVMResultSetManipulator resultSetManipulator = new TVMResultSetManipulator(plugin, uuid);
                 if (resultSetManipulator.resultSet()) {
                     // open gui
-                    ItemStack[] gui = new TVMGUI(plugin, resultSetManipulator.getTachyonLevel()).getGui();
-                    Inventory vortexManipulatorGui = plugin.getServer().createInventory(player, 54, "§4Vortex Manipulator");
-                    vortexManipulatorGui.setContents(gui);
-                    player.openInventory(vortexManipulatorGui);
+                    ItemStack[] guiItems = new TVMGUI(plugin, resultSetManipulator.getTachyonLevel()).getItems();
+                    Inventory vortexManipulatorInventory = plugin.getServer().createInventory(player, 54, "§4Vortex Manipulator");
+                    vortexManipulatorInventory.setContents(guiItems);
+                    player.openInventory(vortexManipulatorInventory);
                     return true;
                 }
             }
@@ -116,7 +116,7 @@ public class TVMCommand implements CommandExecutor {
                 return true;
             }
 
-            Parameters params = new Parameters(player, TVMUtils.getProtectionFlags());
+            Parameters parameters = new Parameters(player, TVMUtils.getProtectionFlags());
             int required;
             List<String> worlds = new ArrayList<>();
             Location location;
@@ -135,7 +135,7 @@ public class TVMCommand implements CommandExecutor {
                     required = plugin.getConfig().getInt("tachyon_use.travel.world");
                     // only world specified (or incomplete setting)
                     worlds.add(args[0]);
-                    location = plugin.getTardisApi().getRandomLocation(worlds, null, params);
+                    location = plugin.getTardisApi().getRandomLocation(worlds, null, parameters);
                 }
                 case 4 -> {
                     required = plugin.getConfig().getInt("tachyon_use.travel.coords");
@@ -191,7 +191,7 @@ public class TVMCommand implements CommandExecutor {
                 default -> {
                     required = plugin.getConfig().getInt("tachyon_use.travel.random");
                     // random
-                    location = plugin.getTardisApi().getRandomLocation(plugin.getTardisApi().getWorlds(), null, params);
+                    location = plugin.getTardisApi().getRandomLocation(plugin.getTardisApi().getWorlds(), null, parameters);
                 }
             }
             List<Player> players = new ArrayList<>();
@@ -227,8 +227,8 @@ public class TVMCommand implements CommandExecutor {
     }
 
     public boolean containsIgnoreCase(String key, List<String> list) {
-        for (String string : list) {
-            if (string.equalsIgnoreCase(key)) {
+        for (String s : list) {
+            if (s.equalsIgnoreCase(key)) {
                 return true;
             }
         }

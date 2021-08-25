@@ -99,12 +99,12 @@ public class TVMBeaconCommand implements CommandExecutor {
             block.setBlockData(Material.BEACON.createBlockData());
             Block down = block.getRelative(BlockFace.DOWN);
             queryFactory.saveBeaconBlock(uuidString, down);
-            BlockData iron = Material.IRON_BLOCK.createBlockData();
-            down.setBlockData(iron);
+            BlockData ironBlock = Material.IRON_BLOCK.createBlockData();
+            down.setBlockData(ironBlock);
             List<BlockFace> blockFaces = Arrays.asList(BlockFace.EAST, BlockFace.NORTH_EAST, BlockFace.NORTH, BlockFace.NORTH_WEST, BlockFace.WEST, BlockFace.SOUTH_WEST, BlockFace.SOUTH, BlockFace.SOUTH_EAST);
             blockFaces.forEach((blockFace) -> {
                 queryFactory.saveBeaconBlock(uuidString, down.getRelative(blockFace));
-                down.getRelative(blockFace).setBlockData(iron);
+                down.getRelative(blockFace).setBlockData(ironBlock);
             });
             plugin.getBeaconSetters().add(uuid);
             // remove tachyons

@@ -90,7 +90,7 @@ public class TVMDatabase {
             } catch (SQLException e) {
                 try {
                     setConnection();
-                } catch (Exception ex) {
+                } catch (Exception e1) {
                     TARDISVortexManipulatorPlugin.plugin.debug("Could not re-connect to database!");
                 }
             }

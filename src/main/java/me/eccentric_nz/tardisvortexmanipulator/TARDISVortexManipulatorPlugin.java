@@ -89,7 +89,7 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
         registerCommands();
         ShapedRecipe recipe = new TVMRecipe(this).makeRecipe();
         getServer().addRecipe(recipe);
-        tardisApi.addShapedRecipe("vortex-manipulator", recipe);
+        tardisApi.addShapedRecipe("vortex_manipulator", recipe);
         startRecharger();
     }
 
@@ -116,14 +116,14 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
         String databaseType = getConfig().getString("storage.database");
         try {
             if (databaseType.equals("sqlite")) {
-                String path = getDataFolder() + File.separator + "Tvm.db";
+                String path = getDataFolder() + File.separator + "TVM.db";
                 service.setConnection(path);
                 TVMSQLite sqlite = new TVMSQLite(this);
                 sqlite.createTables();
             } else {
                 service.setConnection();
-                TVMMySQL mysql = new TVMMySQL(this);
-                mysql.createTables();
+                TVMMySQL mySql = new TVMMySQL(this);
+                mySql.createTables();
             }
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, "Connection and Tables Error: " + e.getMessage());
@@ -175,11 +175,11 @@ public class TARDISVortexManipulatorPlugin extends JavaPlugin {
     /**
      * Outputs a message to the console. Requires debug: true in config.yml
      *
-     * @param object the Object to print to the console
+     * @param o the Object to print to the console
      */
-    public void debug(Object object) {
+    public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {
-            getLogger().log(Level.CONFIG, (String) object);
+            getLogger().log(Level.CONFIG, (String) o);
         }
     }
 }

@@ -71,86 +71,86 @@ public class TVMSavesGUIListener extends TVMGUICommon implements Listener {
         }
     }
 
-    private void doPrev(InventoryView view, Player p) {
+    private void doPrev(InventoryView view, Player player) {
         int page = getPageNumber(view);
         if (page > 1) {
             int start = (page * 44) - 44;
-            close(p);
+            close(player);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, p.getUniqueId().toString());
-                ItemStack[] gui = tvms.getGui();
-                Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Saves");
-                vmg.setContents(gui);
-                p.openInventory(vmg);
+                TVMSavesGUI savesGui = new TVMSavesGUI(plugin, start, start + 44, player.getUniqueId().toString());
+                ItemStack[] savesGuiItems = savesGui.getItems();
+                Inventory savesInventory = plugin.getServer().createInventory(player, 54, "§4VM Saves");
+                savesInventory.setContents(savesGuiItems);
+                player.openInventory(savesInventory);
             }, 2L);
         }
     }
 
-    private void doNext(InventoryView view, Player p) {
+    private void doNext(InventoryView view, Player player) {
         int page = getPageNumber(view);
         int start = (page * 44) + 44;
-        close(p);
+        close(player);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, p.getUniqueId().toString());
-            ItemStack[] gui = tvms.getGui();
-            Inventory vmg = plugin.getServer().createInventory(p, 54, "§4VM Saves");
-            vmg.setContents(gui);
-            p.openInventory(vmg);
+            TVMSavesGUI savesGui = new TVMSavesGUI(plugin, start, start + 44, player.getUniqueId().toString());
+            ItemStack[] savesGuiItems = savesGui.getItems();
+            Inventory savesInventory = plugin.getServer().createInventory(player, 54, "§4VM Saves");
+            savesInventory.setContents(savesGuiItems);
+            player.openInventory(savesInventory);
         }, 2L);
     }
 
-    private void delete(InventoryView view, Player p) {
+    private void delete(InventoryView view, Player player) {
         if (selectedSlot != -1) {
-            ItemStack is = view.getItem(selectedSlot);
-            ItemMeta im = is.getItemMeta();
-            String save_name = im.getDisplayName();
-            TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, p.getUniqueId().toString(), save_name);
-            if (rss.resultSet()) {
-                close(p);
+            ItemStack save = view.getItem(selectedSlot);
+            ItemMeta saveMeta = save.getItemMeta();
+            String saveName = saveMeta.getDisplayName();
+            TVMResultSetWarpByName resultSetWarpByName = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), saveName);
+            if (resultSetWarpByName.resultSet()) {
+                close(player);
                 HashMap<String, Object> where = new HashMap<>();
-                where.put("save_id", rss.getId());
+                where.put("save_id", resultSetWarpByName.getId());
                 new TVMQueryFactory(plugin).doDelete("saves", where);
-                p.sendMessage(plugin.getMessagePrefix() + "Save deleted.");
+                player.sendMessage(plugin.getMessagePrefix() + "Save deleted.");
             }
         } else {
-            p.sendMessage(plugin.getMessagePrefix() + "Select a save!");
+            player.sendMessage(plugin.getMessagePrefix() + "Select a save!");
         }
     }
 
-    private void doWarp(InventoryView view, Player p) {
+    private void doWarp(InventoryView view, Player player) {
         if (selectedSlot != -1) {
-            ItemStack is = view.getItem(selectedSlot);
-            ItemMeta im = is.getItemMeta();
-            String save_name = im.getDisplayName();
-            TVMResultSetWarpByName rss = new TVMResultSetWarpByName(plugin, p.getUniqueId().toString(), save_name);
-            if (rss.resultSet()) {
-                close(p);
+            ItemStack save = view.getItem(selectedSlot);
+            ItemMeta saveMeta = save.getItemMeta();
+            String saveName = saveMeta.getDisplayName();
+            TVMResultSetWarpByName resultSetWarpByName = new TVMResultSetWarpByName(plugin, player.getUniqueId().toString(), saveName);
+            if (resultSetWarpByName.resultSet()) {
+                close(player);
                 List<Player> players = new ArrayList<>();
-                players.add(p);
+                players.add(player);
                 if (plugin.getConfig().getBoolean("allow.multiple")) {
-                    p.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((e) -> {
-                        if (e instanceof Player && !e.getUniqueId().equals(p.getUniqueId())) {
-                            players.add((Player) e);
+                    player.getNearbyEntities(0.5d, 0.5d, 0.5d).forEach((entity) -> {
+                        if (entity instanceof Player && !entity.getUniqueId().equals(player.getUniqueId())) {
+                            players.add((Player) entity);
                         }
                     });
                 }
                 int required = plugin.getConfig().getInt("tachyon_use.travel.saved") * players.size();
-                if (!TVMUtils.checkTachyonLevel(p.getUniqueId().toString(), required)) {
-                    close(p);
-                    p.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
+                if (!TVMUtils.checkTachyonLevel(player.getUniqueId().toString(), required)) {
+                    close(player);
+                    player.sendMessage(plugin.getMessagePrefix() + "You need at least " + required + " tachyons to travel!");
                     return;
                 }
-                Location l = rss.getWarp();
-                p.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
-                while (!l.getChunk().isLoaded()) {
-                    l.getChunk().load();
+                Location location = resultSetWarpByName.getWarp();
+                player.sendMessage(plugin.getMessagePrefix() + "Standby for Vortex travel...");
+                while (!location.getChunk().isLoaded()) {
+                    location.getChunk().load();
                 }
-                TVMUtils.movePlayers(players, l, p.getLocation().getWorld());
+                TVMUtils.movePlayers(players, location, player.getLocation().getWorld());
                 // remove tachyons
-                new TVMQueryFactory(plugin).alterTachyons(p.getUniqueId().toString(), -required);
+                new TVMQueryFactory(plugin).alterTachyons(player.getUniqueId().toString(), -required);
             }
         } else {
-            p.sendMessage(plugin.getMessagePrefix() + "Select a save!");
+            player.sendMessage(plugin.getMessagePrefix() + "Select a save!");
         }
     }
 }

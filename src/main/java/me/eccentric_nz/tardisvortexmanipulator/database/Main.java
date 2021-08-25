@@ -33,20 +33,20 @@ public class Main {
      *
      * @param console the output window of the tool
      * @param sqlite  the SQLite file to migrate
-     * @param mysql   the SQL file to write to
+     * @param mySql   the SQL file to write to
      * @param prefix  the desired table prefix
      */
-    public static void process(PrintWriter console, File sqlite, File mysql, String prefix) throws IOException {
+    public static void process(PrintWriter console, File sqlite, File mySql, String prefix) throws IOException {
         if (!sqlite.canRead()) {
             console.println("Specified original file " + sqlite + " does not exist or cannot be read!");
             return;
         }
-        if (mysql.exists()) {
-            console.println("Specified output file " + mysql + " exists, please remove it before running this program!");
+        if (mySql.exists()) {
+            console.println("Specified output file " + mySql + " exists, please remove it before running this program!");
             return;
         }
-        if (!mysql.createNewFile()) {
-            console.println("Could not create specified output file " + mysql + " please ensure that it is in a valid directory which can be written to.");
+        if (!mySql.createNewFile()) {
+            console.println("Could not create specified output file " + mySql + " please ensure that it is in a valid directory which can be written to.");
             return;
         }
         if (!prefix.isEmpty()) {
@@ -66,7 +66,7 @@ public class Main {
                 console.println("***** ERROR: Could not connect to SQLite database!");
                 return;
             }
-            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(mysql, false))) {
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(mySql, false))) {
                 bufferedWriter.write("-- TARDISVortexManipulator SQL Dump");
                 bufferedWriter.newLine();
                 bufferedWriter.newLine();
@@ -90,16 +90,16 @@ public class Main {
                     bufferedWriter.write(String.format(SQL.CREATES.get(i), prefix));
                     bufferedWriter.newLine();
                     bufferedWriter.newLine();
-                    String count = "SELECT COUNT(*) AS count FROM " + table;
-                    ResultSet resultSetCount = statement.executeQuery(count);
+                    String countMessage = "SELECT COUNT(*) AS count FROM " + table;
+                    ResultSet resultSetCount = statement.executeQuery(countMessage);
                     if (resultSetCount.isBeforeFirst()) {
                         resultSetCount.next();
-                        int c = resultSetCount.getInt("count"); // TODO Rename this one, too.
-                        console.println("Found " + c + " " + table + " records");
+                        int count = resultSetCount.getInt("count");
+                        console.println("Found " + count + " " + table + " records");
                         String query = "SELECT * FROM " + table;
                         ResultSet resultSet = statement.executeQuery(query);
                         if (resultSet.isBeforeFirst()) {
-                            int b = 1;
+                            int b = 1; // TODO Rename this.
                             bufferedWriter.write(SQL.COMMENT);
                             bufferedWriter.newLine();
                             bufferedWriter.write(SQL.DUMP + table);
@@ -110,25 +110,25 @@ public class Main {
                             bufferedWriter.write(String.format(SQL.INSERTS.get(i), prefix));
                             bufferedWriter.newLine();
                             while (resultSet.next()) {
-                                String end = (b == c) ? ";" : ",";
+                                String end = (b == count) ? ";" : ",";
                                 b++;
-                                String string;
+                                String s;
                                 switch (table) {
                                     case beacons -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
-                                        bufferedWriter.write(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
+                                        bufferedWriter.write(s);
                                     }
                                     case manipulator -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
-                                        bufferedWriter.write(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
+                                        bufferedWriter.write(s);
                                     }
                                     case messages -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
-                                        bufferedWriter.write(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
+                                        bufferedWriter.write(s);
                                     }
                                     case saves -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
-                                        bufferedWriter.write(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
+                                        bufferedWriter.write(s);
                                     }
                                     default -> {
                                     }

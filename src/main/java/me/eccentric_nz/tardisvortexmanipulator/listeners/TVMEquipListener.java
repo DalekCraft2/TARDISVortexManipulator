@@ -90,10 +90,10 @@ public class TVMEquipListener implements Listener {
             if (resultSetManipulator.resultSet()) {
                 if (action.equals(Action.RIGHT_CLICK_AIR)) {
                     // open gui
-                    ItemStack[] gui = new TVMGUI(plugin, resultSetManipulator.getTachyonLevel()).getGui();
-                    Inventory vortexManipulatorGui = plugin.getServer().createInventory(player, 54, "§4Vortex Manipulator");
-                    vortexManipulatorGui.setContents(gui);
-                    player.openInventory(vortexManipulatorGui);
+                    ItemStack[] guiItems = new TVMGUI(plugin, resultSetManipulator.getTachyonLevel()).getItems();
+                    Inventory vortexManipulatorInventory = plugin.getServer().createInventory(player, 54, "§4Vortex Manipulator");
+                    vortexManipulatorInventory.setContents(guiItems);
+                    player.openInventory(vortexManipulatorInventory);
                 } else if (plugin.getConfig().getBoolean("allow.look_at_block") && player.hasPermission("vm.lookatblock")) {
                     UUID uuid = player.getUniqueId();
                     int maxDistance = plugin.getConfig().getInt("max_look_at_distance");

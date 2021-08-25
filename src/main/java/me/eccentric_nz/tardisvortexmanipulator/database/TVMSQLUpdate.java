@@ -78,18 +78,18 @@ public class TVMSQLUpdate implements Runnable {
         try {
             service.testConnection(connection);
             preparedStatement = connection.prepareStatement(query);
-            int s = 1;
+            int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue().getClass().equals(String.class) || entry.getValue().getClass().equals(UUID.class)) {
-                    preparedStatement.setString(s, entry.getValue().toString());
+                    preparedStatement.setString(i, entry.getValue().toString());
                 }
                 if (entry.getValue() instanceof Integer) {
-                    preparedStatement.setInt(s, (Integer) entry.getValue());
+                    preparedStatement.setInt(i, (Integer) entry.getValue());
                 }
                 if (entry.getValue() instanceof Long) {
-                    preparedStatement.setLong(s, (Long) entry.getValue());
+                    preparedStatement.setLong(i, (Long) entry.getValue());
                 }
-                s++;
+                i++;
             }
             data.clear();
             preparedStatement.executeUpdate();

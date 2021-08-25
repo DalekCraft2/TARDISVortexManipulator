@@ -76,9 +76,9 @@ public class TVMSaveCommand implements CommandExecutor {
                 }
                 int start = (page * 10) - 10;
                 int limit = page * 10;
-                TVMResultSetSaves rss = new TVMResultSetSaves(plugin, uuid, start, limit);
-                if (rss.resultSet()) {
-                    TVMUtils.sendSaveList(player, rss, page);
+                TVMResultSetSaves resultSetSaves = new TVMResultSetSaves(plugin, uuid, start, limit);
+                if (resultSetSaves.resultSet()) {
+                    TVMUtils.sendSaveList(player, resultSetSaves, page);
                 }
             } catch (NumberFormatException e) {
                 plugin.debug("Wasn't a page number...");

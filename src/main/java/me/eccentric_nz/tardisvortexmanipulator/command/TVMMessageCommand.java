@@ -58,16 +58,16 @@ public class TVMMessageCommand implements CommandExecutor {
                 player.sendMessage(plugin.getMessagePrefix() + "Incorrect command usage!");
                 return false;
             }
-            String first = args[0].toLowerCase(); // TODO Figure out how to name these three "first"s differently.
+            String sub = args[0].toLowerCase();
             try {
-                FIRST f = FIRST.valueOf(first);
-                switch (f) {
+                FIRST first = FIRST.valueOf(sub);
+                switch (first) {
                     case MSG -> {
                         OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(args[1]);
-                        String ofp_uuid = offlinePlayer.getUniqueId().toString();
+                        String offlinePlayerUuid = offlinePlayer.getUniqueId().toString();
                         // check they have a Vortex Manipulator
-                        TVMResultSetManipulator tvmResultSetManipulator = new TVMResultSetManipulator(plugin, ofp_uuid);
-                        if (!tvmResultSetManipulator.resultSet()) {
+                        TVMResultSetManipulator resultSetManipulator = new TVMResultSetManipulator(plugin, offlinePlayerUuid);
+                        if (!resultSetManipulator.resultSet()) {
                             player.sendMessage(plugin.getMessagePrefix() + args[1] + " does not have a Vortex Manipulator!");
                             return true;
                         }
@@ -77,7 +77,7 @@ public class TVMMessageCommand implements CommandExecutor {
                         }
                         String message = stringBuilder.toString();
                         HashMap<String, Object> whereOfflinePlayer = new HashMap<>();
-                        whereOfflinePlayer.put("uuid_to", ofp_uuid);
+                        whereOfflinePlayer.put("uuid_to", offlinePlayerUuid);
                         whereOfflinePlayer.put("uuid_from", player.getUniqueId().toString());
                         whereOfflinePlayer.put("message", message);
                         whereOfflinePlayer.put("date", System.currentTimeMillis());
@@ -89,18 +89,18 @@ public class TVMMessageCommand implements CommandExecutor {
                         if (args.length == 2) {
                             if (args[1].equalsIgnoreCase("out")) {
                                 // list outbox
-                                TVMResultSetOutbox tvmResultSetOutbox = new TVMResultSetOutbox(plugin, uuid, 0, 10);
-                                if (tvmResultSetOutbox.resultSet()) {
-                                    TVMUtils.sendOutboxList(player, tvmResultSetOutbox, 1);
+                                TVMResultSetOutbox resultSetOutbox = new TVMResultSetOutbox(plugin, uuid, 0, 10);
+                                if (resultSetOutbox.resultSet()) {
+                                    TVMUtils.sendOutboxList(player, resultSetOutbox, 1);
                                 } else {
                                     player.sendMessage(plugin.getMessagePrefix() + "There are no messages in your outbox.");
                                     return true;
                                 }
                             } else {
                                 // list inbox
-                                TVMResultSetInbox tvmResultSetInbox = new TVMResultSetInbox(plugin, uuid, 0, 10);
-                                if (tvmResultSetInbox.resultSet()) {
-                                    TVMUtils.sendInboxList(player, tvmResultSetInbox, 1);
+                                TVMResultSetInbox resultSetInbox = new TVMResultSetInbox(plugin, uuid, 0, 10);
+                                if (resultSetInbox.resultSet()) {
+                                    TVMUtils.sendInboxList(player, resultSetInbox, 1);
                                 } else {
                                     player.sendMessage(plugin.getMessagePrefix() + "There are no messages in your inbox.");
                                     return true;
@@ -120,18 +120,18 @@ public class TVMMessageCommand implements CommandExecutor {
                         int limit = page * 10;
                         if (args[1].equalsIgnoreCase("out")) {
                             // outbox
-                            TVMResultSetOutbox tvmResultSetOutbox = new TVMResultSetOutbox(plugin, uuid, start, limit);
-                            if (tvmResultSetOutbox.resultSet()) {
-                                TVMUtils.sendOutboxList(player, tvmResultSetOutbox, page);
+                            TVMResultSetOutbox resultSetOutbox = new TVMResultSetOutbox(plugin, uuid, start, limit);
+                            if (resultSetOutbox.resultSet()) {
+                                TVMUtils.sendOutboxList(player, resultSetOutbox, page);
                             } else {
                                 player.sendMessage(plugin.getMessagePrefix() + "There are no messages in your outbox.");
                                 return true;
                             }
                         } else {
                             // inbox
-                            TVMResultSetInbox tvmResultSetInbox = new TVMResultSetInbox(plugin, uuid, start, limit);
-                            if (tvmResultSetInbox.resultSet()) {
-                                TVMUtils.sendInboxList(player, tvmResultSetInbox, page);
+                            TVMResultSetInbox resultSetInbox = new TVMResultSetInbox(plugin, uuid, start, limit);
+                            if (resultSetInbox.resultSet()) {
+                                TVMUtils.sendInboxList(player, resultSetInbox, page);
                             } else {
                                 player.sendMessage(plugin.getMessagePrefix() + "There are no messages in your inbox.");
                                 return true;
@@ -155,8 +155,8 @@ public class TVMMessageCommand implements CommandExecutor {
                     case DELETE -> {
                         int deleteId = parseNum(args[1]);
                         if (deleteId != -1) {
-                            TVMResultSetMessageByID tvmResultSetMessageById = new TVMResultSetMessageByID(plugin, deleteId);
-                            if (tvmResultSetMessageById.resultSet()) {
+                            TVMResultSetMessageByID resultSetMessageById = new TVMResultSetMessageByID(plugin, deleteId);
+                            if (resultSetMessageById.resultSet()) {
                                 HashMap<String, Object> where = new HashMap<>();
                                 where.put("message_id", deleteId);
                                 new TVMQueryFactory(plugin).doDelete("messages", where);
@@ -173,7 +173,7 @@ public class TVMMessageCommand implements CommandExecutor {
                             player.sendMessage(plugin.getMessagePrefix() + "You need to specify which mail box you want to clear (in or out)!");
                             return true;
                         }
-                        TVMQueryFactory tvmQueryFactory = new TVMQueryFactory(plugin);
+                        TVMQueryFactory queryFactory = new TVMQueryFactory(plugin);
                         HashMap<String, Object> where = new HashMap<>();
                         String which = "Outbox";
                         if (args[1].equalsIgnoreCase("out")) {
@@ -182,25 +182,24 @@ public class TVMMessageCommand implements CommandExecutor {
                             where.put("uuid_to", player.getUniqueId().toString());
                             which = "Inbox";
                         }
-                        tvmQueryFactory.doDelete("messages", where);
+                        queryFactory.doDelete("messages", where);
                         player.sendMessage(plugin.getMessagePrefix() + which + " cleared.");
                     }
                 }
-            } catch (IllegalArgumentException illegalArgumentException) {
+            } catch (IllegalArgumentException e) {
                 player.sendMessage(plugin.getMessagePrefix() + "Incorrect command usage!");
                 return false;
             }
-            return true;
         } else {
             player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
-            return true;
         }
+        return true;
     }
 
-    private int parseNum(String string) {
+    private int parseNum(String s) {
         try {
-            return Integer.parseInt(string);
-        } catch (NumberFormatException numberFormatException) {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
             return -1;
         }
     }

@@ -36,7 +36,7 @@ public class TVMSavesGUI {
     private final TARDISVortexManipulatorPlugin plugin;
     private final int start, finish;
     private final String uuid;
-    private final ItemStack[] gui;
+    private final ItemStack[] items;
     private final HashMap<String, Material> blocks = new HashMap<>();
 
     public TVMSavesGUI(TARDISVortexManipulatorPlugin plugin, int start, int finish, String uuid) {
@@ -47,7 +47,7 @@ public class TVMSavesGUI {
         blocks.put("NORMAL", Material.DIRT);
         blocks.put("NETHER", Material.NETHERRACK);
         blocks.put("THE_END", Material.END_STONE);
-        gui = getItemStack();
+        items = getItemStack();
     }
 
     /**
@@ -57,7 +57,7 @@ public class TVMSavesGUI {
      */
     private ItemStack[] getItemStack() {
 
-        ItemStack[] stack = new ItemStack[54];
+        ItemStack[] itemStacks = new ItemStack[54];
         int i = 0;
         // get the player's messages
         TVMResultSetSaves resultSetSaves = new TVMResultSetSaves(plugin, uuid, start, 44);
@@ -70,7 +70,7 @@ public class TVMSavesGUI {
                 saveMeta.setDisplayName(ChatColor.RESET + save.getName());
                 saveMeta.setLore(Arrays.asList(ChatColor.GRAY + "World: " + save.getWorld(), ChatColor.GRAY + "x: " + oneDecimal(save.getX()), ChatColor.GRAY + "y: " + save.getY(), ChatColor.GRAY + "z: " + oneDecimal(save.getZ())));
                 saveItem.setItemMeta(saveMeta);
-                stack[i] = saveItem;
+                itemStacks[i] = saveItem;
                 i++;
             }
         }
@@ -78,56 +78,56 @@ public class TVMSavesGUI {
         int n = start / 44 + 1;
         // page number
         ItemStack page = new ItemStack(Material.BOWL, 1);
-        ItemMeta num = page.getItemMeta();
-        num.setDisplayName(ChatColor.RESET + "Page " + n);
-        num.setCustomModelData(119);
-        page.setItemMeta(num);
-        stack[45] = page;
+        ItemMeta pageMeta = page.getItemMeta();
+        pageMeta.setDisplayName(ChatColor.RESET + "Page " + n);
+        pageMeta.setCustomModelData(119);
+        page.setItemMeta(pageMeta);
+        itemStacks[45] = page;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta win = close.getItemMeta();
-        win.setDisplayName(ChatColor.RESET + "Close");
-        win.setCustomModelData(1);
-        close.setItemMeta(win);
-        stack[46] = close;
+        ItemStack closeButton = new ItemStack(Material.BOWL, 1);
+        ItemMeta closeButtonMeta = closeButton.getItemMeta();
+        closeButtonMeta.setDisplayName(ChatColor.RESET + "Close");
+        closeButtonMeta.setCustomModelData(1);
+        closeButton.setItemMeta(closeButtonMeta);
+        itemStacks[46] = closeButton;
         // previous screen (only if needed)
         if (start > 0) {
-            ItemStack prev = new ItemStack(Material.BOWL, 1);
-            ItemMeta een = prev.getItemMeta();
-            een.setDisplayName(ChatColor.RESET + "Previous Page");
-            een.setCustomModelData(120);
-            prev.setItemMeta(een);
-            stack[48] = prev;
+            ItemStack previousButton = new ItemStack(Material.BOWL, 1);
+            ItemMeta previousButtonMeta = previousButton.getItemMeta();
+            previousButtonMeta.setDisplayName(ChatColor.RESET + "Previous Page");
+            previousButtonMeta.setCustomModelData(120);
+            previousButton.setItemMeta(previousButtonMeta);
+            itemStacks[48] = previousButton;
         }
         // next screen (only if needed)
         if (finish > 44) {
-            ItemStack next = new ItemStack(Material.BOWL, 1);
-            ItemMeta scr = next.getItemMeta();
-            scr.setDisplayName(ChatColor.RESET + "Next Page");
-            scr.setCustomModelData(116);
-            next.setItemMeta(scr);
-            stack[49] = next;
+            ItemStack nextButton = new ItemStack(Material.BOWL, 1);
+            ItemMeta nextButtonMeta = nextButton.getItemMeta();
+            nextButtonMeta.setDisplayName(ChatColor.RESET + "Next Page");
+            nextButtonMeta.setCustomModelData(116);
+            nextButton.setItemMeta(nextButtonMeta);
+            itemStacks[49] = nextButton;
         }
         // delete
-        ItemStack delete = new ItemStack(Material.BOWL, 1);
-        ItemMeta deleteMeta = delete.getItemMeta();
-        deleteMeta.setDisplayName(ChatColor.RESET + "Delete");
-        deleteMeta.setCustomModelData(107);
-        delete.setItemMeta(deleteMeta);
-        stack[51] = delete;
+        ItemStack deleteButton = new ItemStack(Material.BOWL, 1);
+        ItemMeta deleteButtonMeta = deleteButton.getItemMeta();
+        deleteButtonMeta.setDisplayName(ChatColor.RESET + "Delete");
+        deleteButtonMeta.setCustomModelData(107);
+        deleteButton.setItemMeta(deleteButtonMeta);
+        itemStacks[51] = deleteButton;
         // warp
-        ItemStack warp = new ItemStack(Material.BOWL, 1);
-        ItemMeta to = warp.getItemMeta();
-        to.setDisplayName(ChatColor.RESET + "Enter Vortex");
-        to.setCustomModelData(127);
-        warp.setItemMeta(to);
-        stack[53] = warp;
+        ItemStack goButton = new ItemStack(Material.BOWL, 1);
+        ItemMeta goButtonMeta = goButton.getItemMeta();
+        goButtonMeta.setDisplayName(ChatColor.RESET + "Enter Vortex");
+        goButtonMeta.setCustomModelData(127);
+        goButton.setItemMeta(goButtonMeta);
+        itemStacks[53] = goButton;
 
-        return stack;
+        return itemStacks;
     }
 
-    public ItemStack[] getGui() {
-        return gui;
+    public ItemStack[] getItems() {
+        return items;
     }
 
     private String oneDecimal(double d) {

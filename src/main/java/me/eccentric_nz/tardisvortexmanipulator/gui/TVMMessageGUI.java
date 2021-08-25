@@ -35,14 +35,14 @@ public class TVMMessageGUI {
     private final TARDISVortexManipulatorPlugin plugin;
     private final int start, finish;
     private final String uuid;
-    private final ItemStack[] gui;
+    private final ItemStack[] items;
 
     public TVMMessageGUI(TARDISVortexManipulatorPlugin plugin, int start, int finish, String uuid) {
         this.plugin = plugin;
         this.start = start;
         this.finish = finish;
         this.uuid = uuid;
-        gui = getItemStack();
+        items = getItemStack();
     }
 
     /**
@@ -52,7 +52,7 @@ public class TVMMessageGUI {
      */
     private ItemStack[] getItemStack() {
 
-        ItemStack[] stack = new ItemStack[54];
+        ItemStack[] itemStacks = new ItemStack[54];
         int i = 0;
         // get the player's messages
         TVMResultSetInbox resultSetInbox = new TVMResultSetInbox(plugin, uuid, start, 44);
@@ -71,7 +71,7 @@ public class TVMMessageGUI {
                 String from = plugin.getServer().getOfflinePlayer(message.getWho()).getName();
                 messageMeta.setLore(Arrays.asList(ChatColor.GRAY + "From: " + from, ChatColor.GRAY + "Date: " + message.getDate(), ChatColor.GRAY + "" + message.getId()));
                 messageItem.setItemMeta(messageMeta);
-                stack[i] = messageItem;
+                itemStacks[i] = messageItem;
                 i++;
             }
         }
@@ -79,55 +79,55 @@ public class TVMMessageGUI {
         int n = start / 44 + 1;
         // page number
         ItemStack page = new ItemStack(Material.BOWL, 1);
-        ItemMeta num = page.getItemMeta();
-        num.setDisplayName(ChatColor.RESET + "Page " + n);
-        num.setCustomModelData(119);
-        page.setItemMeta(num);
-        stack[45] = page;
+        ItemMeta pageMeta = page.getItemMeta();
+        pageMeta.setDisplayName(ChatColor.RESET + "Page " + n);
+        pageMeta.setCustomModelData(119);
+        page.setItemMeta(pageMeta);
+        itemStacks[45] = page;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta win = close.getItemMeta();
-        win.setDisplayName(ChatColor.RESET + "Close");
-        win.setCustomModelData(1);
-        close.setItemMeta(win);
-        stack[46] = close;
+        ItemStack closeButton = new ItemStack(Material.BOWL, 1);
+        ItemMeta closeButtonMeta = closeButton.getItemMeta();
+        closeButtonMeta.setDisplayName(ChatColor.RESET + "Close");
+        closeButtonMeta.setCustomModelData(1);
+        closeButton.setItemMeta(closeButtonMeta);
+        itemStacks[46] = closeButton;
         // previous screen (only if needed)
         if (start > 0) {
-            ItemStack prev = new ItemStack(Material.BOWL, 1);
-            ItemMeta een = prev.getItemMeta();
-            een.setDisplayName(ChatColor.RESET + "Previous Page");
-            een.setCustomModelData(120);
-            prev.setItemMeta(een);
-            stack[48] = prev;
+            ItemStack previousButton = new ItemStack(Material.BOWL, 1);
+            ItemMeta previousButtonMeta = previousButton.getItemMeta();
+            previousButtonMeta.setDisplayName(ChatColor.RESET + "Previous Page");
+            previousButtonMeta.setCustomModelData(120);
+            previousButton.setItemMeta(previousButtonMeta);
+            itemStacks[48] = previousButton;
         }
         // next screen (only if needed)
         if (finish > 44) {
-            ItemStack next = new ItemStack(Material.BOWL, 1);
-            ItemMeta scr = next.getItemMeta();
-            scr.setDisplayName(ChatColor.RESET + "Next Page");
-            scr.setCustomModelData(116);
-            next.setItemMeta(scr);
-            stack[49] = next;
+            ItemStack nextButton = new ItemStack(Material.BOWL, 1);
+            ItemMeta nextButtonMeta = nextButton.getItemMeta();
+            nextButtonMeta.setDisplayName(ChatColor.RESET + "Next Page");
+            nextButtonMeta.setCustomModelData(116);
+            nextButton.setItemMeta(nextButtonMeta);
+            itemStacks[49] = nextButton;
         }
         // read
-        ItemStack read = new ItemStack(Material.BOWL, 1);
-        ItemMeta daer = read.getItemMeta();
-        daer.setDisplayName(ChatColor.RESET + "Read");
-        daer.setCustomModelData(121);
-        read.setItemMeta(daer);
-        stack[51] = read;
+        ItemStack readButton = new ItemStack(Material.BOWL, 1);
+        ItemMeta readButtonMeta = readButton.getItemMeta();
+        readButtonMeta.setDisplayName(ChatColor.RESET + "Read");
+        readButtonMeta.setCustomModelData(121);
+        readButton.setItemMeta(readButtonMeta);
+        itemStacks[51] = readButton;
         // delete
-        ItemStack delete = new ItemStack(Material.BOWL, 1);
-        ItemMeta deleteMeta = delete.getItemMeta();
-        deleteMeta.setDisplayName(ChatColor.RESET + "Delete");
-        deleteMeta.setCustomModelData(107);
-        delete.setItemMeta(deleteMeta);
-        stack[53] = delete;
+        ItemStack deleteButton = new ItemStack(Material.BOWL, 1);
+        ItemMeta deleteButtonMeta = deleteButton.getItemMeta();
+        deleteButtonMeta.setDisplayName(ChatColor.RESET + "Delete");
+        deleteButtonMeta.setCustomModelData(107);
+        deleteButton.setItemMeta(deleteButtonMeta);
+        itemStacks[53] = deleteButton;
 
-        return stack;
+        return itemStacks;
     }
 
-    public ItemStack[] getGui() {
-        return gui;
+    public ItemStack[] getItems() {
+        return items;
     }
 }

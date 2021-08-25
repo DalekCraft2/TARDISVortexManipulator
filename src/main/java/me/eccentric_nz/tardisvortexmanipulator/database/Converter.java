@@ -65,43 +65,43 @@ public class Converter implements Runnable {
             int i = 0;
             for (SQL.TABLE table : SQL.TABLE.values()) {
                 sender.sendMessage(plugin.getMessagePrefix() + "Reading and writing " + table.toString() + " table");
-                String count = "SELECT COUNT(*) AS count FROM " + table;
-                ResultSet resultSetCount = readStatement.executeQuery(count);
+                String countMessage = "SELECT COUNT(*) AS count FROM " + table;
+                ResultSet resultSetCount = readStatement.executeQuery(countMessage);
                 if (resultSetCount.isBeforeFirst()) {
                     resultSetCount.next();
-                    int c = resultSetCount.getInt("count"); // TODO Rename this variable, and the previous "count".
-                    sender.sendMessage(plugin.getMessagePrefix() + "Found " + c + " " + table + " records");
+                    int count = resultSetCount.getInt("count");
+                    sender.sendMessage(plugin.getMessagePrefix() + "Found " + count + " " + table + " records");
                     String query = "SELECT * FROM " + table;
                     ResultSet resultSet = readStatement.executeQuery(query);
                     if (resultSet.isBeforeFirst()) {
-                        int b = 1;
+                        int b = 1; // TODO Rename this.
                         StringBuilder stringBuilder = new StringBuilder();
                         try {
                             stringBuilder.append(String.format(SQL.INSERTS.get(i), prefix));
-                        } catch (MissingFormatArgumentException missingFormatArgumentException) {
+                        } catch (MissingFormatArgumentException e) {
                             sender.sendMessage(plugin.getMessagePrefix() + "INSERT " + table);
                         }
                         while (resultSet.next()) {
-                            String end = (b == c) ? ";" : ",";
+                            String end = (b == count) ? ";" : ",";
                             b++;
-                            String string;
+                            String s;
                             try {
                                 switch (table) {
                                     case beacons -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
-                                        stringBuilder.append(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getInt("beacon_id"), resultSet.getString("uuid"), resultSet.getString("location"), resultSet.getString("block_type"), resultSet.getInt("data")) + end;
+                                        stringBuilder.append(s);
                                     }
                                     case manipulator -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
-                                        stringBuilder.append(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getString("uuid"), resultSet.getInt("tachyon_level")) + end;
+                                        stringBuilder.append(s);
                                     }
                                     case messages -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
-                                        stringBuilder.append(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getInt("message_id"), resultSet.getString("uuid_to"), resultSet.getString("uuid_from"), resultSet.getString("message"), resultSet.getString("date"), resultSet.getInt("read")) + end;
+                                        stringBuilder.append(s);
                                     }
                                     case saves -> {
-                                        string = String.format(SQL.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
-                                        stringBuilder.append(string);
+                                        s = String.format(SQL.VALUES.get(i), resultSet.getInt("save_id"), resultSet.getString("uuid"), resultSet.getString("save_name"), resultSet.getString("world"), resultSet.getFloat("x"), resultSet.getFloat("y"), resultSet.getFloat("z"), resultSet.getFloat("yaw"), resultSet.getFloat("pitch")) + end;
+                                        stringBuilder.append(s);
                                     }
                                     default -> {
                                     }
@@ -139,7 +139,7 @@ public class Converter implements Runnable {
             Class.forName("org.sqlite.JDBC");
             String path = plugin.getDataFolder() + File.separator + "TVM.db";
             return DriverManager.getConnection("jdbc:sqlite:" + path);
-        } catch (ClassNotFoundException ignore) {
+        } catch (ClassNotFoundException e) {
             return null;
         }
     }

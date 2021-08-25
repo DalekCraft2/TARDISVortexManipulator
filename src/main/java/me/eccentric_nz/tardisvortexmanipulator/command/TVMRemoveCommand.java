@@ -59,8 +59,8 @@ public class TVMRemoveCommand implements CommandExecutor {
             }
             String uuid = player.getUniqueId().toString();
             // check for existing save
-            TVMResultSetWarpByName resultSetWarp = new TVMResultSetWarpByName(plugin, uuid, args[0]);
-            if (resultSetWarp.resultSet()) {
+            TVMResultSetWarpByName resultSetWarpByName = new TVMResultSetWarpByName(plugin, uuid, args[0]);
+            if (resultSetWarpByName.resultSet()) {
                 player.sendMessage(plugin.getMessagePrefix() + "No save with that name exists! Try using /vms to list saves.");
                 return true;
             }
@@ -69,10 +69,9 @@ public class TVMRemoveCommand implements CommandExecutor {
             where.put("save_name", args[0]);
             new TVMQueryFactory(plugin).doDelete("saves", where);
             sender.sendMessage(plugin.getMessagePrefix() + "Vortex Manipulator location (" + args[0] + ") removed!");
-            return true;
         } else {
             player.sendMessage(plugin.getMessagePrefix() + "You don't have a Vortex Manipulator in your hand!");
-            return true;
         }
+        return true;
     }
 }

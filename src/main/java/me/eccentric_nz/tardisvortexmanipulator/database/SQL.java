@@ -32,7 +32,7 @@ public class SQL {
     public static final String STRUCTURE = "-- Table structure for table ";
     public static final String SEPARATOR = "-- --------------------------------------------------------";
 
-    public enum TABLE {
+    public enum TABLE { // TODO Make these all capital.
 
         beacons,
         manipulator,

@@ -58,11 +58,11 @@ public class TVMRecipe {
         itemMeta.setDisplayName("Vortex Manipulator");
         if (!plugin.getConfig().getString("recipe.lore").equals("")) {
             List<String> lore = plugin.getConfig().getStringList("recipe.lore");
-            lore.replaceAll(string -> ChatColor.translateAlternateColorCodes('&', string));
+            lore.replaceAll(s -> ChatColor.translateAlternateColorCodes('&', s));
             itemMeta.setLore(lore);
         }
         itemMeta.setCustomModelData(10000002);
-        // TODO Convert legacy Vortex Manipulators (I.E. items with the base item and lore from the config, and the name "Vortex Manipulator") to have PBVs
+        // TODO Undo the PBV stuff.
         itemMeta.getPersistentDataContainer().set(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING, "vortex_manipulator");
         itemStack.setItemMeta(itemMeta);
         NamespacedKey key = new NamespacedKey(plugin, "Vortex_Manipulator");
@@ -78,7 +78,7 @@ public class TVMRecipe {
             Set<String> ingredients = plugin.getConfig().getConfigurationSection("recipe.ingredients").getKeys(false);
             ingredients.forEach((ingredient) -> {
                 char c = ingredient.charAt(0);
-                Material material1 = Material.valueOf(plugin.getConfig().getString("recipe.ingredients." + ingredient)); // TODO Make this variable name more unique.
+                Material material1 = Material.valueOf(plugin.getConfig().getString("recipe.ingredients." + ingredient));
                 recipe.setIngredient(c, material1);
             });
         } catch (IllegalArgumentException e) {

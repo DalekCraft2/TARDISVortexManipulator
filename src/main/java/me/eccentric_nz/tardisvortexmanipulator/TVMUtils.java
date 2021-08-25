@@ -118,7 +118,7 @@ public class TVMUtils {
      */
     public static void sendSaveList(Player player, TVMResultSetSaves resultSetSaves, int page) {
         player.sendMessage(TARDISVortexManipulatorPlugin.plugin.getMessagePrefix() + ChatColor.AQUA + "Saves (page " + page + ":");
-        resultSetSaves.getSaves().forEach((s) -> player.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ()));
+        resultSetSaves.getSaves().forEach((save) -> player.sendMessage(save.getName() + " - " + save.getWorld() + ":" + save.getX() + ":" + save.getY() + ":" + save.getZ()));
     }
 
     /**
@@ -172,7 +172,7 @@ public class TVMUtils {
         int remainder = seconds - (hour * 3600);
         int minute = remainder / 60;
         int second = remainder - (minute * 60);
-        String gHour = (hour > 1 || hour == 0) ? " hours " : " hour "; // TODO Figure out what the heck the "g" stands for.
+        String gHour = (hour > 1 || hour == 0) ? " hours " : " hour "; // TODO Figure out what the heck the "g" stands for. Maybe "grammar".
         String gMinute = (minute > 1 || minute == 0) ? " minutes " : " minute ";
         String gSecond = (second > 1 || second == 0) ? " seconds" : " second";
         return hour + gHour + minute + gMinute + second + gSecond;

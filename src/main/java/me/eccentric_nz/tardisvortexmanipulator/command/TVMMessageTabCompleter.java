@@ -30,20 +30,20 @@ import java.util.List;
  */
 public class TVMMessageTabCompleter extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("msg", "list", "read", "delete", "clear");
-    private final ImmutableList<String> IN_OUT_SUBS = ImmutableList.of("in", "out");
+    private final ImmutableList<String> rootSubs = ImmutableList.of("msg", "list", "read", "delete", "clear");
+    private final ImmutableList<String> inOutSubs = ImmutableList.of("in", "out");
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         if (args.length <= 1) {
-            return partial(args[0], ROOT_SUBS);
+            return partial(args[0], rootSubs);
         }
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("msg")) {
                 return null;
             }
             if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("clear")) {
-                return partial(args[1], IN_OUT_SUBS);
+                return partial(args[1], inOutSubs);
             }
         }
         return ImmutableList.of();
