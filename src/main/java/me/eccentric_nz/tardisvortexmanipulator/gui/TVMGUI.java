@@ -161,7 +161,7 @@ public class TVMGUI {
         coord.setDisplayName(ChatColor.RESET + "Z");
         coord.setCustomModelData(131);
         z.setItemMeta(coord);
-        // tachyon level - TODO Show different levels depending on % full
+        // tachyon level
         double percent = tachyonLevel / plugin.getConfig().getDouble("tachyon_use.max");
         short durability = (short) (1562 - (percent * 1562));
         ItemStack tachyon = new ItemStack(Material.DIAMOND_PICKAXE, 1);

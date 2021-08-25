@@ -64,10 +64,6 @@ public class TVMMessageCommand implements CommandExecutor {
                 switch (f) {
                     case MSG -> {
                         OfflinePlayer offlinePlayer = plugin.getServer().getOfflinePlayer(args[1]);
-                        if (offlinePlayer == null) {
-                            player.sendMessage(plugin.getMessagePrefix() + "Could not find a player with that name!");
-                            return true;
-                        }
                         String ofp_uuid = offlinePlayer.getUniqueId().toString();
                         // check they have a Vortex Manipulator
                         TVMResultSetManipulator tvmResultSetManipulator = new TVMResultSetManipulator(plugin, ofp_uuid);
