@@ -63,7 +63,7 @@ public class TVMRecipe {
         }
         itemMeta.setCustomModelData(10000002);
         // TODO Undo the PBV stuff.
-        itemMeta.getPersistentDataContainer().set(TARDISVortexManipulatorPlugin.plugin.getItemKey(), PersistentDataType.STRING, "vortex_manipulator");
+        itemMeta.getPersistentDataContainer().set(plugin.getItemKey(), PersistentDataType.STRING, "vortex_manipulator");
         itemStack.setItemMeta(itemMeta);
         NamespacedKey key = new NamespacedKey(plugin, "Vortex_Manipulator");
         ShapedRecipe recipe = new ShapedRecipe(key, itemStack);

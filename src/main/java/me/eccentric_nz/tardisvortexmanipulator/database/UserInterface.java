@@ -119,24 +119,24 @@ public class UserInterface extends javax.swing.JFrame {
         inputButton.setText("Browse");
         inputButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                inputButtonMouseReleased(evt);
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                inputButtonMouseReleased(e);
             }
         });
 
         outputButton.setText("Browse");
         outputButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                outputButtonMouseReleased(evt);
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                outputButtonMouseReleased(e);
             }
         });
 
         convertButton.setText("Convert");
         convertButton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                convertButtonMouseReleased(evt);
+            public void mouseReleased(java.awt.event.MouseEvent e) {
+                convertButtonMouseReleased(e);
             }
         });
 
